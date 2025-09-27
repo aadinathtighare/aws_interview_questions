@@ -93,3 +93,6 @@ What’s the difference between EFS and S3? When would you use each?
 
 How do you manage secrets or sensitive data in AWS?
 --------------------------------------------
+in aws load balancer forward 80% traffic to tg1 and 20 traffic to tg2.
+for blue green deployment.
+this option now available ??
