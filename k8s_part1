@@ -1,1 +1,80 @@
+quorum-->
+We take odd number of master nodes in kubeadm because etcd consensus needs majority quorum. Odd numbers maximize fault-tolerance while minimizing wasted capacity.
+Q. how ur pod will ping external domain like google.com or on-prem domain or database?
 
+eksctl upgrade cluster --name my-eks-1-32-cluster --region us-east-1 --approve
+
+eksctl delete cluster --name my-eks-1-32-cluster --region us-east-1
+
+eksctl update addon --cluster my-eks-1-32-cluster --region us-east-1 --name kube-proxy --force
+
+eksctl update addon --cluster my-eks-1-32-cluster --region us-east-1 --name coredns --force
+
+eksctl update addon --cluster my-eks-1-32-cluster --region us-east-1 --name vpc-cni --force
+
+
+aws eks update-nodegroup-version --cluster-name my-eks-1-32-cluster --region us-east-1 --nodegroup-name my-nodes --kubernetes-version 1.33
+
+aws eks list-nodegroups --cluster-name my-eks-1-32-cluster
+
+aws eks list-addons --cluster-name my-eks-1-32-cluster
+-->
+"addons": [
+        "coredns",
+        "kube-proxy",
+        "metrics-server",
+        "vpc-cni"
+-----------------------------------------
+It's a good practice to create a backup before upgrading.
+------------------------------------------------
+Q. if we create eks cluster with terraform then cloudformation stack templates not created ? suppose I created eks cluster via eksctl create cluster -f <cluster.yaml>like this command?
+#eksctl create cluster -f cluster.yaml
+eksctl create cluster वापरल्यास
+
+eksctl internally CloudFormation वापरतो.
+
+Cluster तयार करताना eksctl 2 CloudFormation stacks तयार करतो:
+
+eksctl-<cluster-name>-cluster → EKS control plane आणि networking resources.
+
+eksctl-<cluster-name>-nodegroup-... → Node group stack.
+
+👉 म्हणजे AWS Console मध्ये CloudFormation → Stacks tab मध्ये हे दिसतील.
+-----------
+AWS Console मध्ये काय दिसेल?
+
+AWS Console → CloudFormation → Stacks उघड.
+
+तुला तिथे दोन major stacks दिसतील:
+
+1. eksctl-my-eks-cluster-cluster
+
+हा stack EKS Control Plane तयार करतो.
+
+यात resources असतात:
+
+VPC, Subnets, Route Tables, Internet Gateway
+
+Security Groups
+
+EKS Control Plane (cluster)
+
+2. eksctl-my-eks-cluster-nodegroup-ng-xxxx
+
+हा stack Node Group manage करतो.
+
+यात resources असतात:
+
+EC2 Auto Scaling Group
+
+Launch Template (Worker nodes साठी)
+
+Node IAM Role
+
+Instance Profile
+
+📌 AWS Console → EKS
+
+जर तू EKS service console मध्ये जाशील, तर my-eks-cluster cluster दिसेल.
+
+पण त्याचा backend configuration (VPC, EC2 nodes) हे CloudFormation stacks मध्ये दिसतात.
