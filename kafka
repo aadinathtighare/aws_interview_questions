@@ -1,0 +1,3 @@
+Configured Kafka topics, partitions, and retention policies to optimize performance for high-throughput UPI transaction data.
+Implemented monitoring and logging for MSK using AWS CloudWatch and Prometheus, enabling real-time alerting and visibility into message flow and broker health.
+Utilized AWS MSK (Managed Streaming for Apache Kafka) in the Paytm UPI project to enable secure, scalable, and real-time transaction processing with reduced operational overhead.
