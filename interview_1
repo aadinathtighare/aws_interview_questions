@@ -1,0 +1,14 @@
+Q. how to resolve dns query connect on-prem to eks? coredns
+Q. I want to deploy 1000 pods in eks cluster then how to assign storage?
+Q. how pod will communicate my aws s3 services?
+answer: Using VPC Gateway Endpoint (Recommended)
+Q. Previously I created ec2 instance with terraform but statefile was deleted by me then I used terraform apply what happens?
+Q. Meta-Argument: terraform?
+Q. explain Jenkins CICD pipeline end to end process?
+Q. explain ingress controller?
+Q. how to migrate on-prem servers in terraform?
+Q. u r using helm?
+Q. argo CD?
+Q.how to run script in terraform ?
+Use the remote-exec or file provisioner inside a resource.
+Q. if tags is not giving to my ec2 instance then it should not launch how to achieve this ?
