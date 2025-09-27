@@ -1,0 +1,95 @@
+🔹 Advanced/Real-Time AWS Cloud Scenarios:
+🚧 Deployment & High Availability
+
+How would you deploy a multi-AZ, multi-region architecture for fault tolerance?
+
+How would you migrate a large on-premise app to AWS with minimal downtime?
+
+What strategy would you use to update a running EC2 instance with new application code?
+
+🔐 Security & IAM
+
+You found that a developer accidentally made an S3 bucket public. What would you do?
+
+How would you enforce MFA for all IAM users in your account?
+
+How do you handle cross-account access securely?
+
+📊 Monitoring & Logging
+
+An EC2 instance is running slow. What steps would you take to troubleshoot it using AWS services?
+
+How do you log and analyze API calls made to AWS resources?
+
+💾 Data & Backup
+
+Your RDS database is reaching storage limits. How do you handle it?
+
+How would you automate nightly backups for an EC2 instance?
+
+🔹 DevOps/Automation-Oriented AWS Questions
+
+How do you use AWS CLI to manage infrastructure?
+
+What is CloudFormation and how do you use it?
+
+Have you used Terraform with AWS? How is it better/different than CloudFormation?
+
+How do you implement CI/CD in AWS?
+
+How would you trigger a Lambda function on file upload to an S3 bucket?
+
+🔹 Real-Time Troubleshooting Scenarios
+
+You can’t SSH into your EC2 instance – what do you check?
+
+A Lambda function is timing out – what steps do you take?
+
+Your app running on EC2 can’t connect to RDS – how do you debug?
+
+You are hitting S3 access denied errors – how do you resolve?
+-------------------------------------------------
+🔹 Basic AWS Interview Questions (For Beginners)
+
+What is AWS and what are its key services?
+
+What is EC2 and how do you use it?
+
+What is the difference between S3 and EBS?
+
+Explain the difference between a public and private subnet.
+
+What is an AMI? How do you create one?
+
+What is an Elastic IP and when would you use it?
+
+How does auto-scaling work in AWS?
+
+What are security groups and how are they different from NACLs?
+
+What is IAM? Explain roles, users, and policies.
+
+What are the different types of storage available in AWS?
+-------------------------------------------------------------------
+🔹 Intermediate AWS Interview Questions
+
+How does AWS Route 53 work and what routing policies does it support?
+
+How would you set up a highly available web application in AWS?
+
+Explain the shared responsibility model in AWS.
+
+How do you secure data in transit and at rest in AWS?
+
+How do you monitor resources in AWS? (CloudWatch, CloudTrail, etc.)
+
+What is the difference between an ALB, NLB, and CLB?
+
+What is VPC Peering? What are its limitations?
+
+Explain the process of setting up a VPC with public and private subnets.
+
+What’s the difference between EFS and S3? When would you use each?
+
+How do you manage secrets or sensitive data in AWS?
+--------------------------------------------
