@@ -1,0 +1,93 @@
+AWS pricing models :-->
+1. On-Demand Instances (पैसे देऊन वापरा)
+2. Savings Plans (सवलत योजना)
+मराठीत समज: "Long-term commitment देऊन discount मिळवा"
+
+कसे काम करते:
+1 किंवा 3 वर्षांचा commitment द्या
+Hourly usage साठी discount मिळेल (up to 72%)
+दोन प्रकार:
+Compute Savings Plans: सगळ्या EC2 instances, Fargate, Lambda साठी
+EC2 Instance Savings Plans: फक्त specific EC2 instance families साठी.
+
+3. Reserved Instances (आगाऊ बुकिंग):-->
+1. Standard Reserved Instances , 
+2. Convertible Reserved Instances (Convertible RIs)
+3. Scheduled Reserved Instances (Scheduled RIs) VS Savings Plans
+न वापरलेले Standard RIs तुम्ही AWS Marketplace वर विकू शकता (can be sold).
+Payment Options:
+All Upfront: सगळे पैसे आगाऊ द्या (सर्वात जास्त discount)
+Partial Upfront: काही पैसे आगाऊ, बाकी monthly
+No Upfront: फक्त monthly payments
+----------------------------------------------------------------------------------------------------------
+Q. suppose I taken reserved instance plan then I launched 1 ec2 how it will go under that plan?
+----------
+cloud deployment model?
+🔹 1. Public Cloud : AWS, Microsoft Azure, Google Cloud Platform
+🔹 2. Private Cloud : Examples:
+VMware vSphere, OpenStack, or even AWS Outposts (for on-prem private cloud)
+🔹 3. Hybrid Cloud
+Examples:
+AWS + On-prem, Azure Stack + Azure Cloud
+--------------------------------------------------------------------------------
+cost optimization using S3 Lifecycle rules by transitioning data between S3 storage classes — a powerful way to reduce storage costs without deleting your data.
+✅ What is an S3 Lifecycle Rule?
+An S3 Lifecycle Rule automates:
+Transition: Moving data to a cheaper storage class after a certain time.
+Expiration: Deleting data after it is no longer needed.
+S3 Standard, S3 Intelligent-Tiering, S3 Standard-IA, S3 One Zone-IA, S3 Glacier, S3 Glacier Deep Archive
+-----------------------------------------------------------------------------------------------------------
+tell me topics for finops aws engineer basic to advance all levels?
+Q. Linked Accounts vs Member Accounts
+--> AWS billing मध्ये, Linked Accounts आणि Member Accounts या दोन शब्दांचा अर्थ बहुतेकदा एकच असतो, पण त्यांचा वापर कोणत्या AWS service च्या संदर्भात केला आहे यावर थोडासा फरक पडतो. हे दोन्ही concepts Consolidated Billing (एकत्रित बिलिंग) आणि AWS Organizations मुळे येतात.
+Consolidated Billing (एकत्रित बिलिंग) Concept
+Imagine your company has many teams (Dev, QA, Production) and each team uses a separate AWS Account.
+
+Main Idea: Instead of paying for 5-10 separate bills, तुम्ही एकाच ठिकाणी (account) सगळे bills भरता.
+
+1. Management Account (किंवा Payer Account)
+काय असते? (What is it?)
+हा मुख्य Account असतो, जो सगळ्या billing चे payment करतो.
+याला Payer Account सुद्धा म्हणतात.
+या account मध्ये कोणतेही actual workload (EC2 instances, S3 buckets) नसतात; हे फक्त financial governance साठी वापरले जाते.
+-------------------------------------------------------------------------------------------------------------------
+2. Linked Accounts (जुने नाव)
+काय असते? Management Account सोबत link केलेले accounts. यांचे  billing management account मध्ये consolidate (एकत्र) होते.
+हे term AWS Organizations येण्यापूर्वी खूप वापरात होता.
+Billing Role: हे account services (resources) वापरते, पण बिल management account ला जाते.
+------------------------------------------------------------------------
+3. Member Accounts (नवीन आणि Standard नाव)
+काय असते? (What is it?)
+जेव्हा तुम्ही AWS Organizations setup करता, तेव्हा Management Account वगळता बाकीचे सर्व accounts Member Accounts म्हणून ओळखले जातात.
+Member Account आणि Linked Account हे same thing आहे, फक्त Member Account हे AWS Organizations च्या modern terminology नुसारचे नाव आहे.
+
+Core Principle :
+Billing Consolidated (बिलिंग एकत्रित): Member Accounts चे charges Management Account ला जातात.
+Resource Isolation (संसाधन विलगीकरण): प्रत्येक Member Account त्यांचे resources (EC2, S3, RDS) स्वतंत्रपणे (independently) manage करते. एका Member Account मधील team दुसऱ्या Member Account मधील resources पाहू शकत नाही, जोपर्यंत permissions दिले जात नाहीत.
+-----------------------------------------------------------------------------
+2.1 Cost Visibility & Monitoring :-->
+1) AWS Cost Explorer: Deep dive into usage patterns
+2) Budgeting: Creating and managing AWS Budgets
+3) Cost Allocation Tags: Implementation and best practices
+4) Resource Tagging Strategy: Team, project, environment tags
+------------------------------------------------------
+2.3 Storage Optimization
+S3 Lifecycle Policies (Moving to IA, Glacier)
+EBS Optimization: Right-sizing, deleting unattached volumes
+Data Transfer Cost Optimization (Cross-AZ, Cross-Region, Internet)
+AWS Storage Gateway for hybrid storage
+-----------------------------------------------------
+2.4 Basic Automation & Tools
+AWS Cost Anomaly Detection setup
+
+Simple Lambda functions for cost optimization
+
+AWS Trusted Advisor recommendations implementation
+scripts to find out orphan Load Balancers
+-------------------------------------------------------------
+# Budget तयार करा जे monthly ₹10,000 पेक्षा जास्त झाल्यास alert देईल.
+SNS Topic → Create subscription
+Budget Configure करा - Monthly limit सेट करा
+
+Alerts Define करा - 80%, 100%, Forecasted alerts
+-----------------------------------------------------------
