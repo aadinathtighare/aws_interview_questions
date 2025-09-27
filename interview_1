@@ -12,3 +12,11 @@ Q. argo CD?
 Q.how to run script in terraform ?
 Use the remote-exec or file provisioner inside a resource.
 Q. if tags is not giving to my ec2 instance then it should not launch how to achieve this ?
+----------------------------------------------------------------------------
+Standard and Convertible Reserved Instances offering class in reserved instances
+---------------------------------------------------------------------------------
+IRSA वापरून, तुम्ही एका specific pod (via Kubernetes service account) ला AWS च्या resources (जसं की S3, DynamoDB, etc.) access करण्याचा अधिकार देऊ शकता — तेही सुरक्षितपणे, आणि बिना AWS access key वापरता.
+--------------------------------------------------------------------------------
+pod management policy in statefulset explain in mix marathi
+Pending, Running, Succeeded, Failed, Unknown
+-------------------------------------------------------------------------------
