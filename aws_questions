@@ -108,3 +108,5 @@ AWS provides specific tools to package an entire AMI and its associated data int
 •	Hosting and verifying Domains in SES and make sure bounces doesn't reach threshold.
 ----------------------------
 AWS Pricing Calculator
+---------------
+Lambda Concurrency चे प्रकार
