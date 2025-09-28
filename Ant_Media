@@ -1,0 +1,17 @@
+Live Video Streaming --> Ant Media
+Ant Media Server (AMS) is a real-time media streaming engine used for building live video streaming and communication applications that require ultra-low latency.
+---------------------------------------------------------------------------------
+Q. ant media is giving us cloudformation stack ?
+
+Yes, Ant Media Server provides CloudFormation templates for easy deployment and, more importantly, for setting up a highly scalable cluster on AWS.
+-------------------------------------------------------------------------------
+Q. we have to install antmedia on ec2 server ?
+-->  Using the AWS Marketplace (Easiest Method)
+Community Edition AMI, (Free) and the Enterprise Edition AMI.
+--------------------------------
+WebRTC requires the wide range of UDP ports (typically 50000-60000, though this range may be configurable) to be open for both ingress and egress. Without this, ultra-low latency streaming will not work.
+-----------------------------------
+Origin Servers:--> handle the initial publishing of streams.
+
+Edge Servers:-->  scale out to handle a large number of viewers.
+------------------------------
