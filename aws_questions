@@ -110,3 +110,7 @@ AWS provides specific tools to package an entire AMI and its associated data int
 AWS Pricing Calculator
 ---------------
 Lambda Concurrency चे प्रकार
+---------
+when i do blue and green deployment that time I am not touch to database right ?
+
+only change application version ?
