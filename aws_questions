@@ -95,4 +95,14 @@ How do you manage secrets or sensitive data in AWS?
 --------------------------------------------
 in aws load balancer forward 80% traffic to tg1 and 20 traffic to tg2.
 for blue green deployment.
-this option now available ??
+this option now available ?
+--------
+Q.1 can I store ami in s3 bucket ?
+CreateStoreImageTask हे EC2 API
+ CreateRestoreImageTask वापरून परत AMI मध्ये Restore करू शकता.
+ami-xxxxxxxx.bin
+this method is primarily used for long-term archival or when you need to move an AMI across AWS accounts or regions in a way that doesn't use the standard AMI copy feature.
+AWS provides specific tools to package an entire AMI and its associated data into a single, compressed object that is stored in an S3 bucket that you own and manage.
+---------------------------
+•	Hosting and verifying Domains in SES and make sure bounces doesn't reach threshold.
+----------------------------
