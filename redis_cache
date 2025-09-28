@@ -1,0 +1,34 @@
+Q. redis cache database we can use for video conferncing aaplication like zoom meeting ?
+
+होय, तुम्ही Redis Cache चा वापर Video Conferencing Application (जसे की Zoom किंवा Google Meet) साठी नक्कीच करू शकता. Video Conferencing ॲप्स हे खूप 'Real-Time' आणि 'High-Performance' असतात, आणि Redis अशा कामांसाठी उत्तम आहे.
+
+Redis चा वापर खालील प्रमुख विभागांमध्ये केला जातो:
+
+१. Real-Time Chat आणि संदेशन (Real-Time Chat & Messaging)
+व्हिडिओ मीटिंग दरम्यान जी टेक्स्ट चॅट (text chat) होते, ती अत्यंत जलद (fast) आणि तात्काळ (instant) असायला लागते.
+
+Pub/Sub (Publish/Subscribe): Redis चा Pub/Sub feature वापरून, एका यूजरने मेसेज टाइप करताच, तो मेसेज त्या मीटिंगमधील प्रत्येक सहभागीला (participant) instantly पोहोचवता येतो. ही प्रक्रिया latency (विलंब) कमी ठेवते.
+
+Recent Message History: मीटिंगमध्ये नुकतेच पाठवलेले (recent) मेसेजेस Redis च्या Lists डेटा स्ट्रक्चरमध्ये तात्पुरते (temporarily) स्टोअर केले जातात, जेणेकरून नवीन जॉईन झालेल्या युजर्सला मागील मेसेज लगेच दिसतील.
+
+२. उपस्थिती व्यवस्थापन (Presence Management)
+मीटिंगमध्ये कोण ऑनलाइन आहे आणि कोण बोलत आहे, याची माहिती Real-Time मध्ये लागते.
+
+User Status: प्रत्येक युजरचा सध्याचा स्टेटस (उदा. 'Online', 'Speaking', 'Muted') Redis Hashes मध्ये स्टोअर केला जातो.
+
+Screen/Hand Sharing Status: 'Screen Sharing' कोण करत आहे किंवा 'Hand Raise' कोणी केले आहे, ही माहिती देखील अत्यंत कमी latency मध्ये अपडेट करण्यासाठी Redis चा वापर होतो.
+
+३. सत्र (Session) आणि मेटाडेटा कॅशिंग (Metadata Caching)
+व्हिडिओ स्ट्रीमच्या डेटाशिवाय, ॲप्लिकेशनच्या कामासाठी लागणारी महत्त्वाची माहिती (Metadata) जलद ऍक्सेस करण्यासाठी:
+
+Meeting Configuration: मीटिंगचा ID, पासवर्ड, होस्ट कोण आहे, रेकॉर्डिंग सुरू आहे की नाही - ही सर्व कॉन्फिगरेशन माहिती Redis Cache मध्ये स्टोअर केली जाते.
+
+User Authentication/Session: युजरने एकदा लॉग-इन केल्यावर, त्या युजरचे Session Tokens (त्यांच्या लॉगिनची माहिती) Redis मध्ये स्टोअर केले जातात. यामुळे, प्रत्येक API Call साठी डेटाबेसवर जाण्याची गरज नसते आणि ॲप्लिकेशन जलद चालते.
+
+थोडक्यात: Redis चा फायदा (The Redis Advantage)
+
+Redis हा In-Memory डेटा स्टोअर आहे, म्हणजेच तो डेटा RAM मध्ये ठेवतो. त्यामुळे तो पारंपारिक डेटाबेसपेक्षा (Traditional Database) हजारो पटीने जलद (thousands of times faster) असतो. Video Conferencing सारख्या Real-Time ॲप्लिकेशनसाठी हा स्पीड (speed) खूप महत्त्वाचा आहे.
+
+व्हिडिओ आणि ऑडिओचा मुख्य डेटा सामान्यतः WebRTC किंवा Dedicated Media Servers द्वारे जातो, पण त्या मीडियाला नियंत्रित (control) करण्यासाठी आणि मीटिंगचा संदर्भ (context) सांभाळण्यासाठी Redis हा अत्यंत महत्त्वाचा भाग असतो.
+
+
