@@ -1,0 +1,50 @@
+
+Q. Create eks cluster by terraform and automate with jenkins pipeline how?
+----------------------------------
+Q. Which is more use in production? EKS Managed Node Group or Self-managed nodes?
+--> Production workloads → 👉 EKS Managed Node Groups (recommended)
+----------------------------------------
+Q. When we create cluster by eksctl create cluster then it will create 1 vpc automatically so my doubt is the which is the approach is follow in production to create cluster I mean to say we need to create custom vpc and subnets ?
+---> eksctl default behavior
+# eksctl create cluster --name demo --region ap-south-1
+
+eksctl आपोआप एक नवीन VPC + 2 public + 2 private subnets तयार करतो.
+EKS cluster त्याच VPC मध्ये deploy होतो.
+👉 हे dev/test environments साठी जलद setup म्हणून ठीक आहे.
+------------------------------------
+eksctl and existing VPC:
+🔹 Production मध्ये कसं करतात?
+
+Production setup साठी default VPC वापरणं recommend नाही.
+त्याऐवजी:
+
+Custom VPC तयार करतात (Terraform, CloudFormation किंवा manually).
+
+त्या VPC मध्ये subnets define करतात:
+
+Private subnets → worker nodes, pods (secure workloads).
+
+Public subnets → Load balancers, NAT gateways.
+
+नंतर eksctl किंवा Terraform वापरून cluster तयार करताना त्या existing VPC + subnets specify करतात.
+------------------------------
+🔹 Why Custom VPC in Production?
+
+Networking control (CIDR ranges, peering, security).
+
+Multi-AZ HA design (subnets spread across AZs).
+
+On-prem connectivity (VPN/Direct Connect).
+
+Compliance & security policies (private-only workloads).
+
+Reusability (multiple clusters in same VPC).
+----------------
+Example with eksctl and existing VPC
+eksctl create cluster -f cluster.yaml
+--------------------------------------
+Web Tier:     10 replicas  (high, to handle many concurrent users)
+App Tier:     8 replicas   (slightly less than web tier)
+Database:     3 replicas   (1 primary + 2 read replicas)
+-----------------------------
+
