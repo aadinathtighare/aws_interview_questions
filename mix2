@@ -1,0 +1,136 @@
+🔹 DevOps Interview Questions & Answers (5+ YOE)
+1. What is the difference between Continuous Integration, Continuous Delivery, and Continuous Deployment?
+
+CI: Developers frequently merge code to a shared repo; automated builds/tests run.
+
+CD (Delivery): Code is automatically built, tested, and ready for deployment, but requires manual approval.
+
+CD (Deployment): Fully automated release to production with no human intervention.
+
+2. How do you achieve zero downtime deployment in Kubernetes?
+
+Use Rolling updates (kubectl rollout).
+
+Configure readiness/liveness probes.
+
+Use HPA (Horizontal Pod Autoscaler) for scaling.
+
+Optionally use blue/green or canary deployments via tools like Argo Rollouts / Flagger.
+
+3. How do you handle disaster recovery for EC2, RDS, and S3?
+
+EC2: Use AMIs, snapshots, cross-region backups, launch templates.
+
+RDS: Enable multi-AZ, automated backups, cross-region read replicas.
+
+S3: Versioning + Cross-region replication (CRR) + lifecycle policies.
+
+4. What are EKS Managed Node Groups vs Self-managed Nodes?
+
+Managed Node Groups: AWS manages node lifecycle (patching, upgrades, replacement). Less operational overhead.
+
+Self-managed: You launch EC2 instances and manage scaling/patching yourself. More control, but more ops burden.
+👉 In production: Managed Node Groups are widely used unless you have custom AMI/kernel needs.
+
+5. What are Kubernetes Admission Controllers and why are they used?
+
+Admission Controllers intercept requests to the API server before persisting.
+
+Types: Validating (enforce policies), Mutating (modify requests).
+
+Example: NamespaceLifecycle, LimitRanger, PodSecurityPolicy, OPA Gatekeeper.
+
+Use cases: enforce resource limits, security, policies, inject sidecars automatically.
+
+6. How do you upgrade/downgrade an application with no downtime?
+
+Blue-Green Deployment: Deploy new version alongside old one, switch traffic.
+
+Canary Release: Release to small % of users, gradually increase.
+
+Rolling Update: Replace pods one by one (K8s default).
+
+Rollback via kubectl rollout undo if issues.
+
+7. How do you manage secrets in DevOps pipelines?
+
+Avoid hardcoding in repos.
+
+Use Vault (HashiCorp Vault), AWS Secrets Manager, or Kubernetes Secrets (with encryption at rest).
+
+In Jenkins: use Credentials plugin.
+
+Mask secrets in logs.
+
+8. What are Terraform Null Resources and why are they used?
+
+null_resource has no infrastructure mapping.
+
+Used for provisioning actions like running scripts (local-exec, remote-exec).
+
+Example: run configuration commands after creating infrastructure.
+
+9. How do you connect multiple EC2 instances across regions?
+
+Use VPC Peering (for private comms).
+
+Or Transit Gateway (for large-scale multi-VPC).
+
+Or VPN / Direct Connect (secure hybrid setup).
+
+Ensure Security Groups/NACLs allow traffic.
+
+10. What is the difference between SLA, SLO, and SLI in SRE?
+
+SLA (Agreement): Formal contract with customer (e.g., 99.9% uptime).
+
+SLO (Objective): Internal target to meet SLA (e.g., 99.95%).
+
+SLI (Indicator): Measured metric (latency, error rate, availability).
+
+11. How do you monitor Kubernetes clusters?
+
+Prometheus + Grafana for metrics.
+
+Alertmanager for alerts.
+
+ELK/EFK for logs.
+
+Jaeger/Zipkin for tracing.
+
+Use K8s native metrics-server + HPA for autoscaling.
+
+12. What is the difference between CloudFront Signed URL vs Signed Cookies?
+
+Signed URL: Restrict access to a single object.
+
+Signed Cookies: Restrict access to multiple objects.
+👉 Used to deliver paid/private content securely.
+
+13. How do you handle a Jenkins job stuck at "Waiting for next available executor"?
+
+Check Manage Nodes & Clouds to ensure executors are available.
+
+Increase executor count.
+
+Verify agent is connected and online.
+
+14. How do you SSH into an EC2 instance if CPU is 100% and it’s unresponsive?
+
+Use SSM Session Manager (no SSH needed).
+
+Or detach EBS volume → attach to another instance → fix issue → reattach.
+
+Or stop instance → change instance type (more CPU) → restart.
+
+15. What are the main AWS services that are global (not region-specific)?
+
+IAM
+
+Route 53
+
+CloudFront
+
+WAF / Shield
+
+Organizations
