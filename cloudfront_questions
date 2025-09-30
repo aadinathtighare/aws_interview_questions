@@ -1,0 +1,187 @@
+Q. if tags is not giving to my ec2 instance then it should not launch how to achieve this ?
+Q. I hv multiple instances in multiple regions how I will connect that instances each other?
+VPC Peering (Cross-Region) 
+⚠️ Limitation → Transitive peering नाही (A-B, B-C असेल तर A-C काम करणार नाही).
+--------
+AWS Transit Gateway (Best for Multi-Region)
+Transit Gateway = central hub, ज्याला multiple VPCs (even across regions) attach करता येतात.
+
+Region-to-region Transit Gateway peering केलं की → secure, scalable, private connectivity मिळते.
+✅ Production मध्ये जास्त वापरतात (multi-region / multi-account setup मध्ये).
+===========
+Q. different ways to connect to ec2 instances? Bastion Host: jump server
+Q. how to connect to instances in a private subnet without a public IP address ? --> EC2 Instance Connect Endpoint
+--> via AWS Management Console, Mobaxterm with pem file
+AWS Systems Manager (SSM) Session Manager
+------------------------------------
+Q. How to upgrade & downgrade application with zero downtime?
+--> Strategies for Zero Downtime Deployment: 1. Blue-Green Deployment
+Kubernetes → Rolling updates, Canary, Rollback (kubectl rollout).
+
+ArgoCD / Spinnaker / FluxCD → GitOps style Blue-Green & Canary.
+
+Load Balancers (ALB/NLB, HAProxy, Nginx) → Traffic shifting.
+
+Feature Flag platforms → LaunchDarkly, Unleash.
+Rolling Update (Kubernetes style)
+1. Blue-Green Deployment
+-----------------------------------
+Q. in aws list of services which are not region specific ?
+AWS मध्ये Global (Not Region-Specific) Services:
+global like IAM, Route 53, CloudFront, WAF, Shield, and Organizations, Support Plans (Basic/Business/Enterprise)
+-----------------------------
+Q. can I change my plan basic to  Enterprise?
+yes
+-------------
+Q. how to ssh the instance which is down by high cpu usage ? Instance high CPU usage मुळे hang झाला, SSH होत नाही → हा real-world scenario आहे.
+ec2 rescue tool linux
+First try Session Manager (Systems Manager)
+हे best आहे कारण CPU high असला तरी AWS Agent चालू असेल तर login होऊ शकतो.
+-----------------------------------------------------
+Stop → Detach Root Volume → Attach to Another Instance
+-------------------------------------------------
+Q. how many sg we can attach to ec2 instance ?  5 Security Groups 
+🔹 किती Security Groups (SG) EC2 instance ला attach करू शकतो?
+एका EC2 instance ला जास्तीत जास्त 5 Security Groups attach करू शकतो (default AWS limit).
+ही limit per Elastic Network Interface (ENI) असते.
+जर तुझ्याकडे ENI वर multiple SG आहेत → त्या SG मधल्या सर्व rules एकत्र evaluate होतात.
+-------------------------------------------------
+Q. what is geo restrictions in cloudfront ?
+-->🔹 Types of Geo Restriction
+
+Whitelist (Allow List) --> फक्त specific देशांनाच access मिळेल. बाकी सर्व देशांना block होईल.
+
+Blacklist (Block List) --> काही specific देशांना block करतोस. बाकी सर्व देश access करू शकतात.
+---------------------------
+Q. what are the different origins cloudfront is supports ?
+--> Amazon S3 Bucket, Application Load Balancer (ALB), Amazon API Gateway, Amazon EC2 Instances, AWS Lambda Function URL, AWS Media Services
+------------------------
+Q. how to disable cache for cloudfront ?
+AWS Console → CloudFront → Distribution → Behaviors → Edit.
+जर API / Dynamic data असेल → CachingDisabled policy वापर.
+
+जर Static site असेल पण काही file नेहमी fresh लागतात (उदा. JSON, config) → त्या specific paths साठी caching disable कर.
+----------------------
+Q. what are response headers in cloudfront ?
+🔹 CloudFront Response Headers चे प्रकार
+
+Default Headers (CloudFront ने add केलेले)
+
+Via → सांगतो की request CloudFront ने proxy केला.
+
+X-Cache → content Hit (cache मधून मिळाला) की Miss (origin कडून fetch केला).
+
+X-Amz-Cf-Pop → कोणत्या CloudFront Edge Location ने response दिला.
+
+X-Amz-Cf-Id → unique request identifier.
+
+Origin पासून आलेले Headers
+
+जर origin (S3/EC2/ALB) कडून headers आले असतील तर CloudFront तेही forward करतो (जोपर्यंत तू त्यांना strip केलेलं नाही).
+
+उदा.:
+
+Content-Type (text/html, application/json)
+
+Cache-Control
+
+Set-Cookie
+
+Custom Response Headers (CloudFront Function / Response Headers Policy)
+
+CloudFront मध्ये तू स्वतःचे Custom Headers add करू शकतोस.
+
+उदा.:
+
+Security Headers
+
+Strict-Transport-Security (HSTS)
+
+Content-Security-Policy
+
+X-Frame-Options
+
+X-XSS-Protection
+
+CORS Headers
+
+Access-Control-Allow-Origin
+
+Access-Control-Allow-Methods
+
+Custom Metadata Headers
+
+X-App-Version: v1.0.3
+
+X-Owner: DevOps-Team
+
+हे सेट करण्यासाठी:
+--------------------------------------------------------------
+Pre-signed URL + Serverless Architecture.
+------------------------------------------------------
+Q. in terraform what is the null resources ? why we use it ?
+--> null_resource = Terraform मध्ये काहीही actual cloud object नसलेलं resource, पण custom scripts/provisioners चालवण्यासाठी वापरलं जातं.
+म्हणजे तो काहीही create करत नाही — पण provisioners (जसे local-exec, remote-exec) run करण्यासाठी वापरला जातो.
+----------------------------------------------------------------------------
+Q. admission controllers in k8s & why we use it ?
+--> 🔹 Admission Controller चे दोन प्रकार
+1) Mutating Admission Controllers
+Object modify करू शकतात.
+उदा. default values inject करणं, sidecar जोडणं.
+
+2) Validating Admission Controllers
+Object फक्त validate करतात (बदल करत नाहीत).
+उदा. Pod मध्ये privileged containers allow नाही करायचे.
+---------------------------------------------------------------------
+Q. I hv pod & that pod I want to run on specific node?
+--> 1️⃣ nodeSelector (सोपं)
+2️⃣ nodeAffinity (advanced, flexible)
+in production : nodeAffinity वापरून अधिक complex rules define करता येतात.
+nodeSelector (सोपं)
+3️⃣ nodeName (direct scheduling)
+4️⃣ Taints & Tolerations (restrictive control)
+-------------------------------------------------------
+Q. write shell script for finding oldest file in directory ?
+
+#!/bin/bash
+DIR="/opt"
+# जुना file शोधून print करेल (modification time वर आधारित)
+oldest_file=$(ls -lt --time=modify "$DIR" | tail -n 1 | awk '{print $NF}')
+
+echo "Oldest file in $DIR is: $oldest_file"
+----------------------------------------------------------------
+Alpine images in Dockerfile म्हणजे काय?
+
+👉 Alpine Linux ही खूपच हलकी (lightweight) Linux distribution आहे (फक्त ~5 MB च्या आसपास).
+ती Docker मध्ये base image म्हणून खूप वापरली जाते कारण:
+
+Size लहान → Docker image खूप छोटा होतो (fast download & fast deploy).
+
+Security → Minimum packages असल्यामुळे कमी vulnerabilities.
+
+Speed → Container पटकन start होतो.
+-----------------
+FROM alpine:latest
+
+RUN apk add --no-cache curl
+CMD ["echo", "Hello from Alpine!"]
+----------------------------
+apk add → Alpine चा package manager आहे (apt-get सारखा).
+------------------------------------
+Q. how to resolve dns query connect on-prem to eks? coredns
+Q. I want to deploy 1000 pods in eks cluster then how to assign storage?
+Q. how pod will communicate my aws s3 services?
+answer: Using VPC Gateway Endpoint (Recommended)
+Q. Previously I created ec2 instance with terraform but statefile was deleted by me then I used terraform apply what happens?
+Q. Meta-Argument: terraform?
+Q. explain Jenkins CICD pipeline end to end process?
+Q. explain ingress controller?
+Q. how to migrate on-prem servers in terraform?
+Q. u r using helm?
+Q. argo CD?
+Q.how to run script in terraform ?
+Use the remote-exec or file provisioner inside a resource.
+-------------------------------------------------------------
+
+
+
