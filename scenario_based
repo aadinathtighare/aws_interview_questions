@@ -1,0 +1,124 @@
+🔹 Scenario-based DevOps Interview Q&A (5+ Yrs Exp)
+1. Scenario: Prod मध्ये pod वारंवार crash होतंय.
+
+Answer:
+
+kubectl describe pod <pod-name> → Events check करतो.
+
+kubectl logs <pod-name> → app logs पाहतो.
+
+जर liveness/readiness probe issue असेल तर probe config fix करतो.
+
+जर resource कमी असेल (CPU/memory), HPA वापरतो.
+
+👉 Example: Java app OOMKilled झालं → limits increase केली + memory leak fix.
+
+2. Scenario: Jenkins job अचानक fail झालं.
+
+Answer:
+
+Console output मध्ये error trace करतो.
+
+Git repo access/credentials check करतो.
+
+Workspace corrupt असेल तर clean करून job re-run करतो.
+👉 Best practice: Pipeline मध्ये try/catch वापरतो + Slack alerts configure करतो.
+
+3. Scenario: S3 मधून accidental data delete झालं.
+
+Answer:
+
+S3 Versioning enabled असेल तर old version restore करतो.
+
+नाही असल्यास, DR plan वापरतो (cross-region backup किंवा Glacier restore).
+👉 Lesson: नेहमी versioning + lifecycle policies enable करायच्या.
+
+4. Scenario: EC2 मध्ये CPU usage 100% permanently जातंय.
+
+Answer:
+
+SSH करून top/htop ने culprit process ओळखतो.
+
+जर sudden traffic असेल तर Auto Scaling Group trigger करतो.
+
+जर code issue असेल तर rollback करतो.
+
+👉 Example: Node.js API loop मध्ये अडकलेला → rollback to stable version.
+
+5. Scenario: Prod मध्ये deploy केल्यावर 503 errors येत आहेत.
+
+Answer:
+
+First check → Load balancer health checks.
+
+Pods up आहेत का ते check (kubectl get pods -n prod).
+
+Logs पाहतो app-level + ingress-level.
+
+जर config mismatch असेल तर rollback to last stable.
+
+👉 Zero downtime साठी → Canary deployment किंवा Blue-Green strategy वापरतो.
+
+6. Scenario: Terraform apply अडकला / fail झाला.
+
+Answer:
+
+terraform plan ने infra drift check करतो.
+
+terraform state list ने current resources verify करतो.
+
+जर state corrupt असेल तर remote backend restore करतो.
+
+👉 Lesson: Always keep remote backend (S3 + DynamoDB lock).
+
+7. Scenario: एक region down झाला (AWS Outage).
+
+Answer:
+
+Multi-AZ, Multi-region failover plan वापरतो.
+
+Route 53 health checks + DNS failover enabled करतो.
+
+RDS read-replica promote करतो दुसऱ्या region मध्ये.
+
+👉 Example: US-East-1 down झालं तर traffic US-West-2 ला shift केलं.
+
+8. Scenario: Secrets accidentally Git मध्ये push झाले.
+
+Answer:
+
+git reset --soft HEAD~1 किंवा git filter-branch वापरून secrets काढतो.
+
+Repo मध्ये commit delete करून force push.
+
+AWS Keys असल्यास → लगेच revoke करतो + rotate करतो.
+👉 Lesson: Always use .gitignore + secret managers.
+
+9. Scenario: Customer ने 99.9% uptime SLA दिलं आहे, ते कसं meet कराल?
+
+Answer:
+
+Monitoring (Prometheus + Grafana + Alerts).
+
+Automation (Auto-healing, auto-scaling).
+
+Backups & DR policies.
+
+Blue-Green/Canary deploys to avoid downtime.
+
+👉 SLA 99.9% म्हणजे महिन्याला ~43 मिनिट downtime allow आहे.
+
+10. Scenario: Prod deployment मध्ये migration script fail झालं.
+
+Answer:
+
+Rollback script ठेवतो (always reversible migration design).
+
+DB backups घेऊन ठेवतो deploy पूर्वी.
+
+Partial migration झालं असेल तर reconcile करतो.
+
+👉 Example: Liquibase / Flyway tools वापरतो migrations safe करण्यासाठी.
+
+⚡ हे scenarios mostly 5 Yrs+ DevOps interviews मध्ये विचारले जातात.
+तेव्हा तुझं answer नेहमी steps + tool + best practice + lesson learnt अशा structure मध्ये द्यायचं.
