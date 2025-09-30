@@ -1,0 +1,51 @@
+🔹 1. Last 50 log lines from running container web
+
+✅ docker logs web --tail 50
+👉 Directly shows last 50 logs from container logs.
+
+🔹 2. Undo most recent commit but keep work locally
+
+✅ git reset --soft HEAD~1
+👉 --soft keeps changes staged.
+❌ --hard delete करतो changes, ❌ revert new commit बनवतो.
+
+🔹 3. Show mounted filesystems (human-readable)
+
+✅ df -h
+👉 -h = human readable (MB/GB).
+
+🔹 4. Safest way to remove only one IAM role
+
+✅ terraform destroy -target=aws_iam_role.my_role
+👉 Destroys only targeted resource.
+
+🔹 5. Update K8s deployment image (without editing YAML)
+
+✅ kubectl set image deployment/app app=myrepo/app:2.0
+👉 Direct rolling update of image.
+
+🔹 6. EC2 → Access S3 without credentials
+
+✅ IAM Role with S3 policy
+👉 Best practice: attach IAM Role to EC2.
+
+🔹 7. Jenkins job stuck in “Waiting for next available executor”
+
+✅ *Manage Nodes & Clouds* to see whether agents are offline
+👉 First check → are executors available?
+
+🔹 8. Show 5 processes using most memory
+
+✅ ps aux --sort=-%mem | head -n 6
+👉 Sort by memory, show top 5 (plus header).
+
+🔹 9. Show last 50 log lines for systemd service
+
+✅ journalctl -u myapp.service -n 50
+👉 Fetches last 50 logs only for that unit.
+
+🔹 10. Scale Deployment api-svc from 2 → 5 Pods
+
+✅ kubectl scale deployment api-svc --replicas=5
+(तुझ्या options मध्ये नाही, पण जवळचा correct option आहे:)
+👉 kubectl patch deployment api-svc -p '{"spec":{"replicas":5}}'
