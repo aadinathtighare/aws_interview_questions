@@ -1,0 +1,154 @@
+🔹 DevOps Interview MCQ (Set – 2)
+1. In AWS, which storage is best for storing application logs with low cost and infrequent access?
+
+ EBS
+
+ S3 Standard
+
+[✅] S3 Glacier
+
+ EFS
+👉 Explanation: Glacier is cheapest for archival/infrequent access.
+
+2. In Kubernetes, how do you check which node a Pod is running on?
+
+ kubectl get pods -n kube-system
+
+[✅] kubectl get pod <pod-name> -o wide
+
+ kubectl describe nodes
+
+ kubectl logs <pod-name>
+👉 Shows node assignment with -o wide.
+
+3. In Terraform, which command refreshes state file with real infrastructure state?
+
+[✅] terraform refresh
+
+ terraform plan
+
+ terraform apply
+
+ terraform validate
+👉 Refresh updates local state with cloud infra changes.
+
+4. Which Jenkins plugin is used for pipeline as code?
+
+ Git plugin
+
+ Docker plugin
+
+[✅] Pipeline plugin
+
+ SSH plugin
+
+5. Which Docker command removes all stopped containers and unused networks?
+
+ docker rm -f all
+
+[✅] docker system prune
+
+ docker image prune
+
+ docker container prune
+
+6. In Linux, which command finds open ports on the system?
+
+ top
+
+ ps aux
+
+[✅] netstat -tulnp
+
+ df -h
+
+7. In AWS, which service is used for centralized secrets management?
+
+ KMS
+
+ IAM
+
+[✅] AWS Secrets Manager
+
+ SSM Parameter Store
+
+8. Kubernetes: You want only Pods with label app=db to be exposed by Service. What do you configure?
+
+ Pod annotations
+
+ ConfigMap
+
+[✅] Service selector
+
+ Node affinity
+
+9. In Terraform, which block is used to define reusable infrastructure code?
+
+ data {}
+
+[✅] module {}
+
+ output {}
+
+ resource {}
+
+10. In AWS, how can you allow global users (worldwide) to connect faster to S3 hosted website?
+
+ EC2
+
+ Route53 only
+
+[✅] CloudFront distribution
+
+ NAT Gateway
+
+11. Linux: Which command shows CPU usage of all processes sorted by CPU%?
+
+[✅] ps aux --sort=-%cpu | head -n 10
+
+ free -m
+
+ top -n 1 | grep cpu
+
+ uptime
+
+12. Jenkins: Which file stores pipeline definition when using declarative pipeline?
+
+ build.xml
+
+ pom.xml
+
+[✅] Jenkinsfile
+
+ config.xml
+
+13. In Kubernetes, how to roll back to a previous deployment version?
+
+[✅] kubectl rollout undo deployment/<name>
+
+ kubectl delete pod
+
+ kubectl delete deployment
+
+ kubectl restart pod
+
+14. In Terraform, which command shows resources in the current state file?
+
+[✅] terraform state list
+
+ terraform show plan
+
+ terraform graph
+
+ terraform output
+
+15. In AWS, which service provides DDoS protection automatically for CloudFront, Route53?
+
+ AWS GuardDuty
+
+[✅] AWS Shield
+
+ WAF
+
+ Security Groups
+
