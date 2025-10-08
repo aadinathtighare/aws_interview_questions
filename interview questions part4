@@ -1,0 +1,63 @@
+🔍 Question: “What is the parent folder for modules/?”
+
+👉 The parent folder of the modules/ directory is the terraform/ folder itself.
+
+In other words:
+
+Folder	Role
+terraform/	Parent (contains root module + modules folder)
+terraform/modules/	Child folder
+terraform/modules/vpc	Grandchild folder (actual child module code)
+==================
+Q. what is root , child & published module ?
+🧩 Terraform मधील Module Types
+
+Terraform मध्ये तीन प्रकारचे modules आपण प्रॅक्टिकल वापरतो:
+
+प्रकार	नाव	अर्थ
+1️⃣	Root module	Main entry point (तू जिथून terraform apply चालवतोस)
+2️⃣	Child module	Reusable sub-module (modules/ फोल्डरमध्ये define केलेला)
+3️⃣	Published module (Remote)	Public/Private Terraform Registry वर publish केलेला ready-made module
+=======================
+⚙️ 2️⃣ How to use .tfvars
+Terraform चालवताना specific environment चा .tfvars देतोस:
+terraform apply -var-file="prod.tfvars"
+======================================================
+कारण	स्पष्टीकरण
+✅ Environment segregation	Dev, QA, Prod साठी वेगवेगळ्या values ठेवता येतात (instance size, subnet IDs, RDS size इ.)
+======================================================
+🧠 Then — Why we use Private NAT Gateway?
+👉 मुख्य कारण:
+
+जेव्हा तुला Private Subnet मधील instances ना
+दुसऱ्या VPC / On-Prem network / Transit Gateway ला access द्यायचा असतो,
+पण internet वर नको जायचं असतं,
+तेव्हा Private NAT Gateway वापरतात.
+=========================================================
+⚙️ Types of Connectivity in NAT Gateway? 
+Type	Meaning	Use Case
+🌍 Public NAT Gateway	Connected to Internet Gateway (IGW) — uses Elastic IP	When Private Subnets need to access the internet
+🔒 Private NAT Gateway	Connected via Private Link (no Internet Gateway) — no Elastic IP	When Private Subnets in different VPCs or on-prem** need to communicate securely (no internet)**
+===============================================
+🧩Q. Does NAT Gateway create an ENI (Elastic Network Interface)?
+✅ Yes.
+When you create a NAT Gateway in AWS:
+
+AWS automatically creates an Elastic Network Interface (ENI) for the NAT Gateway.
+
+This ENI is placed in the subnet where you are creating the NAT Gateway.
+
+It gets assigned a private IP from the subnet’s CIDR.
+
+If it’s a Public NAT Gateway, the ENI is associated with the Elastic IP you allocated.
+==========================================
+Q. Can I use 1 nat gateway for 3 subnets ?
+एक NAT Gateway अनेक private subnets साठी वापरता येतो,
+पण production मध्ये प्रत्येक AZ साठी स्वतंत्र NAT Gateway ठेवणं चांगलं —
+कारण high availability आणि fault tolerance मिळते.
+=========================================
+Q. I hv 3 nat gateways so I can assign same eip for those 3 nat gateways ?
+जर तुझ्याकडे खालीलप्रमाणे 3 NAT Gateways आहेत 👇
+ap-south-1a, ap-south-1b, ap-south-1c 
+प्रत्येक NAT Gateway साठी नवीन Elastic IP तयार करून attach करावा लागतो.
+=========================================
