@@ -61,3 +61,14 @@ Spot म्हणजे AWS मधले unused EC2 instances.
 
 त्यामुळे Spot nodes आपण non-critical / stateless / auto-recoverable pods साठी वापरतो.
 =========================
+Q. in real time we are using helm charts for install prometheus like that or package my application also ? in prod what is the real time best peactices ?
+============
+🎯 First – Helm chart वापरायचं purpose समजून घे
+
+Helm दोन main purposes साठी वापरतात in production:
+
+Use Case	Example	Purpose
+1️⃣ Platform Tools installation	Prometheus, Grafana, EFK, ArgoCD, Ingress Nginx, EBS CSI driver	✅ Quickly install 3rd party tools
+2️⃣ Application packaging & deployment	तुझे microservices (payment, user, wishlist)	✅ Deploy, upgrade, rollback easily
+==========================
+Q. Suppose I have 3 micro services like payment service , user service, wish list service then I need to create  helm chart , how ?
