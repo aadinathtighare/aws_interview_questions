@@ -1,0 +1,39 @@
+Q. in real time prod env which yaml files we hv for 1 service like give me all like statefulset and if any domain?
+----------------------------------------------------------------------------------------------------------------
+Q. if I develop & deploy  each microservices in in different laungauges like java , python then what changes I need to do in my database?
+------------------------------------------------------------------------------
+Q. Each microservice should have its own database (or at least its own schema).?
+for these 3 services I hv separate hpa.yaml's?
+HPA : Horizontal Pod Autoscaler
+-------------------------------------------------------------------------------
+Ingress --> So you can call it a network-level middleware — not an application middleware.
+-------------------------------------------------------------------------
+Q. in my 3 tier architecture ingress is like middleware for my microservices ?
+-------------------------------------------------------------------------------
+Q. middleware in microservices Architecture ?
+--> API Gateway, Kafka , RabbitMQ
+
+So, middleware exists at 2 levels:
+
+1) Infrastructure level → Ingress, API Gateway, Service Mesh
+
+2) Application level → Auth, logging, validation, etc.
+
+
+-------------------------------------------
+Q. suddenly traffic get increased so pods taking more time to come up ?
+how to solve this
+-----------------------------------------
+Q. but when  created record via ACM then it creates CNAME record ? why 
+Q. when I create cloudfront distribution domain name and that url I map in route53 it shows me A record ?
+-------------------------
+Q. when we are doing static website hosting with s3 plus cloudfront that time s3 static website hosting is required to enable ?
+--> 👉 No, when you’re using CloudFront in front of an S3 bucket,
+you do NOT need to enable “Static website hosting” on that S3 bucket.
+========================
+App Tier (Backend) --> ECS/EKS/Lambda, API Gateway
+------------
+Web Tier (Frontend) --> S3, CloudFront, Route 53 / Load Balancer
+-------------
+Data Tier --> RDS, DynamoDB
+-----------------
