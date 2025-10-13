@@ -37,3 +37,27 @@ Web Tier (Frontend) --> S3, CloudFront, Route 53 / Load Balancer
 -------------
 Data Tier --> RDS, DynamoDB
 -----------------
+we are creating on-demand instances node group & spot instances node group so explain me how we are use spot instances node group in my eks cluster 
+plz explain me in marathi-english mix way
+===========================
+2️⃣ On-Demand Node Group (Base Capacity)
+
+हे instances AWS On-Demand आहेत — म्हणजे fixed price आणि 100% reliability मिळते.
+
+➡️ Production मध्ये हे आपण वापरतो:
+
+Control plane traffic handle करण्यासाठी
+
+Critical microservices (जसे DB, API gateway, etc.)
+
+Minimum base workload
+
+✅ यांना हमखास चालू ठेवतो (e.g. 2–3 nodes minimum capacity).
+
+⚡ 3️⃣ Spot Node Group (Auto Scaling + Cost Saving)
+
+Spot म्हणजे AWS मधले unused EC2 instances.
+हे खूप cheap (70–90% कमी) असतात, पण AWS त्यांना कधीही terminate करू शकतं (2-minute warning देऊन).
+
+त्यामुळे Spot nodes आपण non-critical / stateless / auto-recoverable pods साठी वापरतो.
+=========================
