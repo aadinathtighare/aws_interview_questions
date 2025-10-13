@@ -79,3 +79,6 @@ Q. when we use service type load balancer in eks then it will create by default 
 👉 If you want Application Load Balancer (ALB), you must use Ingress + AWS Load Balancer Controller
 👉 CLB आता rarely वापरतात (deprecated for EKS)
 ==============
+Q. How to convert Kubernetes yaml to Helm Chart yaml ? --> youtube rahul wagh 
+===========
+
