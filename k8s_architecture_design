@@ -72,3 +72,10 @@ Use Case	Example	Purpose
 2️⃣ Application packaging & deployment	तुझे microservices (payment, user, wishlist)	✅ Deploy, upgrade, rollback easily
 ==========================
 Q. Suppose I have 3 micro services like payment service , user service, wish list service then I need to create  helm chart , how ?
+====================
+Q. when we use service type load balancer in eks then it will create by default network load balancer ?
+-->
+👉 “Service type = LoadBalancer” in EKS → AWS automatically creates Network Load Balancer (NLB)
+👉 If you want Application Load Balancer (ALB), you must use Ingress + AWS Load Balancer Controller
+👉 CLB आता rarely वापरतात (deprecated for EKS)
+==============
