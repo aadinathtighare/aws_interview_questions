@@ -1,0 +1,24 @@
+Service Mesh म्हणजे काय? service mesh istio envoy
+
+➡️ Kubernetes मध्ये आपल्याकडे अनेक microservices असतात — जसं
+user-service, payment-service, order-service, wishlist-service इ.
+
+ही services एकमेकांशी network वरून बोलतात (HTTP/gRPC calls etc.).
+आता imagine करा, तुम्हाला खालील गोष्टी control करायच्या आहेत 👇
+
+कोण कोणत्या service शी बोलू शकतो? (security)
+
+traffic कसा जायचा? (routing, retries, load balancing)
+
+communication encrypt करायचा का? (mTLS)
+
+logs, tracing, metrics कसे मिळवायचे? (observability)
+
+हे सगळं manually code मध्ये करणं भारी painful आहे 😩
+
+👉 म्हणून Service Mesh आला!
+
+⚙️ Service Mesh काय करतं (Work कसं करतं)?
+
+Service Mesh हे basically network layer control system आहे.
+तो प्रत्येक pod च्या बाजूला एक sidecar proxy (उदा. Envoy) लावतो.
