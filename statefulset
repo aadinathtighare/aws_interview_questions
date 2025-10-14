@@ -1,0 +1,21 @@
+🧠 Short Summary (मराठी style)
+
+👉 Deployment = “सगळे pods सारखे, data नाही.”
+👉 StatefulSet = “प्रत्येक pod unique, data आहे.”
+===========
+🧩 Deployment vs StatefulSet — Comparison Table
+Feature / Point	Deployment	StatefulSet
+Type of App	Stateless applications	Stateful applications
+Pod Identity (Name)	Random, dynamically generated (उदा. web-5f8d7c-xyz)	Fixed & predictable (उदा. mysql-0, mysql-1)
+Network Identity	Changes when pod restarts	Stable DNS hostname per pod (उदा. mysql-0.mysql.svc)
+Storage (PVC)	Shared / ephemeral — deleted when pod deleted	प्रत्येक pod ला स्वतःचा PVC (Persistent Volume Claim)
+Pod Order (Startup/Shutdown)	Parallel (no fixed order)	Sequential (order maintained: 0 → 1 → 2)
+Scaling Behavior	Fast, parallel scaling	Slow, ordered scaling
+Pod Replacement	New pod gets a new name	Same pod recreated with same name & volume
+Use Case Examples	Nginx, React app, API services, Prometheus server	MySQL, Cassandra, MongoDB, Kafka, Redis
+Service Type Generally Used	ClusterIP / LoadBalancer	Headless Service (clusterIP: None)
+Load Balancing	Through K8s Service	Often client-side (direct to each pod)
+Data Persistence	Not required (data stored externally)	Required (each pod stores own data)
+Rolling Update Strategy	All pods update simultaneously	Update pods one by one (sequentially)
+Best for	Microservices, frontends, stateless workloads	Databases, queues, stateful clusters
+Example Command	kubectl create deployment nginx --image=nginx	kubectl apply -f mysql-statefulset.yaml
