@@ -1,0 +1,45 @@
+☸️ Kube-proxy म्हणजे काय?
+
+kube-proxy हा Kubernetes चा network component आहे —
+जो प्रत्येक node वर चालतो आणि तो Service आणि Pods मधला traffic route / forward करतो.
+
+म्हणजेच kube-proxy चं काम आहे —
+
+“cluster मध्ये कोणत्या Service ला कोणत्या Pod कडे traffic पाठवायचं हे manage करणं.”
+
+⚙️ Main कामं (Responsibilities)
+काम	Explanation
+🧩 1. Service → Pod traffic routing	जेव्हा तू एखादी Service तयार करतोस (उदा. frontend-service), kube-proxy त्याचे backend pods शोधतो आणि traffic त्यांच्या IP कडे redirect करतो.
+🧱 2. iptables / IPVS rules maintain करणे	kube-proxy node वर iptables किंवा IPVS वापरून network rules तयार करतो. या rules मुळे packets योग्य pod पर्यंत पोहोचतात.
+🔁 3. Load balancing	जर Service मागे multiple pods असतील, kube-proxy round-robin / random style ने traffic distribute करतो.
+🔍 4. Cluster networking abstraction	Applications ना backend pods चे IP directly माहीत नसतात — ते फक्त service name वापरतात. kube-proxy हे translate करतो.
+🧠 थोडं खोलात बघू (Example)
+
+समज —
+तुझ्याकडे 2 microservices आहेत:
+
+frontend
+
+backend
+
+frontend ला backend शी बोलायचं आहे.
+
+Without kube-proxy
+
+तुला backend pod चा exact IP माहीत असावा लागेल (जो बदलत राहतो). ❌
+
+With kube-proxy
+
+तू फक्त backend च्या service ला call करशील:
+
+http://backend-service:8080
+
+
+kube-proxy internally route करेल —
+→ त्या service मागच्या backend pods पैकी एका कडे. ✅
+
+🧰 kube-proxy modes
+Mode	Description
+iptables (default)	kube-proxy iptables rules वापरतो packets redirect करण्यासाठी. Fast आणि simple.
+IPVS	Advanced mode, Linux IP Virtual Server वापरतो. जास्त efficient आणि scalable.
+userspace (old)	जुना mode होता, आता rarely वापरतात.
