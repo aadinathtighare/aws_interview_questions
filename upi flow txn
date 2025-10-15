@@ -1,0 +1,65 @@
+Q. when payer send money via paytm so what is the flow of requests it touches which servces?
+-->
+💰 Scenario:
+
+User (Payer) → sends ₹500 to another user (Payee) via Paytm UPI.
+
+You press “Send Money” → “To Mobile Number” → Confirm → Enter UPI PIN → Money sent.
+
+⚙️ 1️⃣ Step-by-step Flow (High Level)
+Step	Description	Typical Service
+1. User action	Payer opens Paytm app, selects recipient, enters amount	Mobile App (Frontend)
+2. API Request	App sends API call to Paytm backend via HTTPS (REST/gRPC)	API Gateway / Load Balancer
+3. Authentication & Session Check	Validate payer’s identity (token, device, etc.)	Auth Service / Token Service
+4. Account lookup	Find payer’s VPA (e.g. ramesh@paytm) & bank details	User Service / Account Service
+5. UPI Request generation	Create UPI transaction request and route to NPCI (UPI switch)	UPI Payment Service
+6. PIN validation	UPI PIN verified via bank’s PSP (bank API integration)	Bank Integration Service / PSP Service
+7. Transaction Processing	Money debited from payer’s account and credited to payee	Transaction Service / Settlement Service
+8. Status update	NPCI response → Paytm updates payment status in DB	Notification Service / Transaction DB
+9. Notification & SMS	Both payer and payee get success message	Notification / SMS / Push Service
+🧩 2️⃣ Flow (Simplified diagram in words)
+Mobile App  
+   ↓  
+API Gateway  
+   ↓  
+Auth Service  
+   ↓  
+UPI Payment Service  
+   ↓  
+Bank PSP (through NPCI)  
+   ↓  
+Receiver Bank  
+   ↓  
+Response back → Paytm Backend  
+   ↓  
+Notification Service → User
+
+🔐 3️⃣ Main Microservices Involved
+Service	Function
+API Gateway	Entry point — receives request from mobile app.
+Auth Service	Validates login, tokens, security.
+User/Account Service	Manages user’s VPA, linked bank info.
+UPI Payment Service	Handles UPI request creation and communication with NPCI.
+Bank Integration / PSP Service	Connects Paytm to user’s bank for debit/credit via UPI.
+Transaction Service	Records transaction, maintains ledger.
+Notification Service	Sends SMS, push, and email updates.
+Analytics / Logging Service	Logs events for tracking and fraud detection.
+🧠 4️⃣ Extra: NPCI (UPI Switch) role
+
+Paytm doesn’t directly move money —
+it sends request → NPCI (UPI switch) → which routes it to payer and payee banks.
+
+NPCI validates UPI PIN + bank response → sends success/failure back to Paytm.
+
+🔄 5️⃣ Final Response
+
+Paytm backend gets NPCI success response → updates database → notifies both users in real-time.
+
+🔍 6️⃣ In Marathi-English mix Summary:
+
+जेव्हा payer Paytm वरून पैसे पाठवतो —
+App request करते → API Gateway → Auth Service → UPI Payment Service → Bank Integration → NPCI → दुसऱ्या बँकेकडे → Response परत Paytm कडे → Notification user ला.
+
+म्हणजेच UPI payment flow मध्ये multiple microservices काम करतात — Auth, User, UPI, Bank, Transaction, आणि Notification.
+
+Would you like me to show this as a diagram (architecture flow chart) showing how each service connects? It’s perfect for interviews or presentation use.
