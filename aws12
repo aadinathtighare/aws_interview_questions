@@ -1,0 +1,156 @@
+Q. for what use cases on-prem data centre needs to connect aws services?
+
+Q. aws direct connect explain me why we used that in real time ?
+Q. aws region vs az availbility zones ?
+===================
+Q. CSPM = Cloud Security Posture Management ?
+तुझ्या cloud environment (AWS accounts, S3, EC2, IAM, RDS, etc.) मध्ये
+configuration errors, policy violations, compliance gaps automatically detect करणं आणि fix सुचवणं.
+
+AWS मध्ये Security Hub हेच CSPM tool म्हणून काम करतं
+===============
+Q. sonar qube is giving what reports ?
+Quality Gate: FAILED ❌
+Bugs: 4
+Vulnerabilities: 2
+Code Smells: 25
+Coverage: 72%
+Duplications: 5.3%
+Maintainability Rating: B
+Reliability Rating: A
+Security Rating: B
+================
+Coverage Report:--> किती percentage code test cases नी cover झालंय
+80% coverage → good, <60% → needs improvement
+==================
+Security Hotspots--> Example: encryption/decryption logic
+
+Documentation Report -> Code मध्ये comments / javadoc कमी आहेत का
+
+Complexity Report --> Methods किती complex आहेत
+
+Duplications Report --> 
+Vulnerabilities Report --> Security issues जे app hack होऊ शकतात	SQL Injection, XSS, Hardcoded passwords
+==========================
+Q. if i m using secret manager for rds password so that I need to keep in application.properties file its possible
+Application मध्ये integrate करण्याचे 3 common approaches
+✅ तू AWS Secrets Manager वापरून password dynamically fetch करू शकतोस at runtime.
+2️⃣ Secure way — Using AWS Secrets Manager ✅
+
+तू RDS credentials Secrets Manager मध्ये ठेवतोस — उदा. secret name:
+🅰️ Option 1 — Spring Cloud AWS (most common in prod) --> तू Spring Cloud AWS Starter dependency वापरतोस.
+नंतर application.properties मध्ये फक्त secret चे नाव ठेवायचं:
+=============
+🅱️ Option 2 — Environment variable based
+तू startup command मध्ये secrets fetch करून environment variables मध्ये export करू शकतोस:
+==============
+तू AWS Secrets Manager वापरून तो value runtime वेळी dynamically fetch करू शकतोस.
+
+म्हणजेच application चालताना password internally Secrets Manager कडून घेईल —
+file मध्ये कधीही दिसणार नाही
+=================
+/etc/nginx/conf.d/myapp.conf what contains this file explain in marathi english
+
+हा file तुझ्या application चं domain, port, SSL, proxy setup, logs इ. define करतो.
+थोडक्यात:
+
+हे सांगतो — “Nginx कसं incoming request handle करेल आणि कुठे forward करेल”.
+============
+server {
+    listen 80;  # HTTP traffic
+    server_name myapp.example.com;
+
+    location / {
+        proxy_pass http://localhost:8080;   # Java / Spring Boot app चालतो इथे
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    access_log /var/log/nginx/myapp_access.log;
+    error_log /var/log/nginx/myapp_error.log;
+}
+
+================
+Q. I want to keep that rds subdomain in application.properties ? its possible ?
+--> Yes ✅ — absolutely possible (आणि real-time production setup मध्ये खूपच common आहे)!
+तू तुझ्या application.properties file मध्ये RDS चं subdomain (Route53 CNAME) थेट वापरू शकतोस.
+-----------------------
+Q. i want to create private hosted zone in r53 & rds endpoint i want to give subdomain
+-------------
+Q. if i hv java app then application.properties file is contains what ?
+========
+Q. in nginx web server how to attach tls certificate?
+========
+Q. dr drill how to do ?
+---------
+Q. DNS-based switch (Route53) फक्त multi-region किंवा isolated setups मध्ये वापरतात. how
+--------
+Q. for blue and green deployment we are switch traffice via load balancer or via route 53 level ? i want answer in marathi-english
+-------------
+🌐 1️⃣ What is AWS Transit Gateway (TGW)?
+
+Transit Gateway म्हणजे एक central router सारखा काम करतो —
+जो multiple VPCs, on-prem networks, and VPN connections ना एकमेकांशी जोडतो.
+
+👉 Simple बोलायचं तर:
+
+Transit Gateway = Central Hub for All Network Connections
+समजा तुझ्याकडे 5 VPCs आहेत:
+
+VPC-A (App layer)
+
+VPC-B (DB layer)
+
+VPC-C (Analytics)
+
+VPC-D (Security tools)
+
+VPC-E (Shared services)
+
+जर तू हे सर्व VPCs VPC Peering ने जोडले, तर तुला full mesh तयार करावी लागते:
+
+N * (N - 1) / 2 = 5 * 4 / 2 = 10 peering connections 😣
+
+👉 म्हणजे maintenance, routing, and scaling फार complex होतो.
+================================
+RUN mvn clean package - DskipTests ?
+------
+🧩 1️⃣ Why Multi-stage Build?
+
+In Docker, multi-stage build म्हणजे —
+build process वेगळा आणि runtime वेगळा ठेवणे.
+
+👉 म्हणजेच:
+
+Stage 1 → code build होईल (JDK, Maven/Gradle लागतो)
+
+Stage 2 → फक्त ready JAR file घेऊन small, secure image तयार होईल (JRE/Distroless)
+
+हे केल्यामुळे:
+
+Final image खूप lightweight होते 💨
+
+Unnecessary build tools (Maven, compiler) image मध्ये राहत नाहीत
+
+Security attack surface कमी होते 🔒
+======
+Alpine म्हणजे एक lightweight Linux distribution —
+जी specially Docker containers साठी बनवलेली आहे.
+
+In short:
+🏔️ Alpine = small, fast, secure Linux base image.
+apk 
+===============
+| Report Type                    | काय दाखवतं                                              | Example / Meaning                               |
+| ------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |
+| **1️⃣ Bugs Report**            | Code मधील logical किंवा runtime issues                  | Null pointer, array index out of bounds, etc.   |
+| **2️⃣ Vulnerabilities Report** | Security issues जे app hack होऊ शकतात                   | SQL Injection, XSS, Hardcoded passwords         |
+| **3️⃣ Code Smells Report**     | Poor coding practices / maintainability issues          | Long methods, duplicate logic, unused variables |
+| **4️⃣ Coverage Report**        | किती percentage code test cases नी cover झालंय          | 80% coverage → good, <60% → needs improvement   |
+| **5️⃣ Duplications Report**    | Repeated code blocks किती आहेत                          | Helps reduce redundant code                     |
+| **6️⃣ Complexity Report**      | Methods किती complex आहेत                               | High cyclomatic complexity → hard to maintain   |
+| **7️⃣ Documentation Report**   | Code मध्ये comments / javadoc कमी आहेत का               | Helps in maintainability                        |
+| **8️⃣ Security Hotspots**      | Potentially dangerous code areas (manual review needed) | Example: encryption/decryption logic            |
+=================
