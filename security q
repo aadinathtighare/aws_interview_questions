@@ -1,0 +1,32 @@
+What is Transit encryption?
+What is waf?
+What is encryption at rest?
+Tell me types of algorithms for encrypt data in cyber security?
+------------
+Types of encryption?
+I hv private ec2 instance then need to access S3 bucket ?
+How ssl certificate do hand shake ?
+Site to site VPN
+=============
+What is the kms
+I hv 1 server in pvt subnet and in that I hv pvt ec2 instance, so to connect ssh that instance that is the internal application I host in that
+========================================
+for example in custom vpc, I hv private subnet in that I hv private instance so in that i host my application so how to do ssh in that .
+don't use ssm session manager, endpoint, bastion host
+--> Set up a VPN (AWS Client VPN or Site-to-Site VPN).
+============================================
+4️⃣ VPN Connection / AWS Client VPN If your private network is large or you need frequent access How it works
+: Set up a VPN (AWS Client VPN or Site-to-Site VPN). Connect from your local system to the VPC. Once connected, your laptop behaves as if it’s inside the VPC.
+# ssh ec2-user@<private-ip>
+============================================
+If I m using nginx webserver then, and I m using application load balancer so I need to configure ssl certificate in nginx application level ,
+Right so,
+In nginx config file I need to give load balancer URL?
+Or domain name is enough?
+==========================================
+and this configuration I need to do manually right in base machine ?
+Via terraform we can't?
+=======================
+
+
+
