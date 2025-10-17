@@ -22,6 +22,8 @@ When you use AWS Serverless (Lambda + API Gateway):
 2️⃣ You want a friendly domain name like https://api.mydomain.com → this is Custom Domain
 3️⃣ Once you use a custom domain, SSL/TLS becomes necessary for HTTPS traffic.
 ------------------------------------------------------------------------------------------------------------------------
+i am using ALB ina ws that is internet facing so there I add listener rule 443 & attached ssl cert so again I need to configure ssl cert in nginx level ?
+-->
 🌐 Scenario You Described
 You have ALB (Application Load Balancer) in AWS → Internet-facing
 You created Listener Rule on 443 (HTTPS)
