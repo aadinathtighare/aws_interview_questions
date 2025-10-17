@@ -49,3 +49,5 @@
 ✅ kubectl scale deployment api-svc --replicas=5
 (तुझ्या options मध्ये नाही, पण जवळचा correct option आहे:)
 👉 kubectl patch deployment api-svc -p '{"spec":{"replicas":5}}'
+----
+convox deepija
