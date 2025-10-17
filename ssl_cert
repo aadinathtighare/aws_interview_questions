@@ -7,7 +7,8 @@ I uploaded my frontend code in S3 bucket, and I’m using CloudFront on top of i
 so in this case nginx is where ?
 configure ssl cert CloudFront level
 --------------------------------------------------------------------------------
-
+Q. i am using ALB ina ws that is internet facing so there I add listener rule 443 & attached ssl cert so again I need to configure ssl cert in nginx level ?
+-------------------
 Q. in serverless we hv custom api endpoints there we custom domain names that we map to api endpoints there I think ssl comes inti picture ?
 -->
 Always use HTTPS with custom domain in serverless APIs.
