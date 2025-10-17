@@ -1,0 +1,24 @@
+Scenario 1)
+You are using Nginx as a web server on EC2 and want to serve your site over HTTPS.
+--> Yes, in this case, you must configure the SSL certificate in Nginx.
+---------------------------------------------------------------------------
+Scenario 2) 
+I uploaded my frontend code in S3 bucket, and I’m using CloudFront on top of it.
+so in this case nginx is where ?
+configure ssl cert CloudFront level
+--------------------------------------------------------------------------------
+
+Q. in serverless we hv custom api endpoints there we custom domain names that we map to api endpoints there I think ssl comes inti picture ?
+-->
+Always use HTTPS with custom domain in serverless APIs.
+Use ACM-managed certificates — AWS automatically renews them.
+For multiple environments (prod / dev), use separate stages with mapped domains.
+-----------------------
+Serverless + Custom Domain + API Gateway + SSL
+
+When you use AWS Serverless (Lambda + API Gateway):
+
+1️⃣ You create API endpoints in API Gateway (https://xxxx.execute-api.region.amazonaws.com/...)
+2️⃣ You want a friendly domain name like https://api.mydomain.com → this is Custom Domain
+3️⃣ Once you use a custom domain, SSL/TLS becomes necessary for HTTPS traffic.
+------------------------------------------------------------------------------------------
