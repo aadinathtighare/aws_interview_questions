@@ -1,0 +1,86 @@
+🔒 Encryption Algorithm Types (एन्क्रिप्शनचे प्रकार)
+
+Encryption म्हणजे data ला unreadable (cipher text) बनवणे — so that only authorized person decrypt करू शकतो.
+
+Encryption algorithms mainly तीन प्रकारचे असतात 👇
+
+1️⃣ Symmetric Key Encryption (सममितीय की एन्क्रिप्शन)
+
+Same key वापरून data encrypt आणि decrypt केला जातो.
+
+म्हणजे sender आणि receiver दोघांकडे एकच secret key असते.
+
+Fast पण key sharing risky असते.
+
+Examples:
+
+🔹 AES (Advanced Encryption Standard)
+
+🔹 DES (Data Encryption Standard)
+
+🔹 3DES (Triple DES)
+
+🔹 Blowfish
+
+🔹 RC4 / RC5
+
+Use Cases:
+
+File encryption, database encryption, backup encryption.
+
+🗣 Marathi Tip:
+"Symmetric म्हणजे दोघांसाठी एकच key — जलद पण कमी सुरक्षित."
+
+2️⃣ Asymmetric Key Encryption (असममितीय की एन्क्रिप्शन)
+
+दोन key असतात — Public key आणि Private key.
+
+Public key ने encrypt केलेले data फक्त Private key ने decrypt होऊ शकते (आणि उलट).
+
+Key sharing safe असते, पण performance थोडं slow असतं.
+
+Examples:
+
+🔹 RSA (Rivest–Shamir–Adleman)
+
+🔹 ECC (Elliptic Curve Cryptography)
+
+🔹 DSA (Digital Signature Algorithm)
+
+Use Cases:
+
+SSL/TLS certificates (HTTPS websites)
+
+Email encryption
+
+Digital signatures
+
+🗣 Marathi Tip:
+"Asymmetric म्हणजे दोन वेगवेगळ्या keys — जास्त सुरक्षित पण slow."
+
+3️⃣ Hashing Algorithms (हॅशिंग अल्गोरिदम्स)
+
+हा encryption नाही, पण data integrity साठी वापरतात.
+
+Hash म्हणजे data चा fixed-length fingerprint.
+
+Hash ला decrypt करता येत नाही.
+
+Examples:
+
+🔹 MD5
+
+🔹 SHA-1 / SHA-256 / SHA-512
+
+🔹 bcrypt, scrypt, Argon2 (password hashing)
+
+Use Cases:
+
+Password storage
+
+Data integrity verification
+
+Digital signatures
+
+🗣 Marathi Tip:
+"Hash म्हणजे data चा fingerprint — एकदा hash झालं की परत original मिळत नाही."
