@@ -6,20 +6,26 @@ Scenario 2)
 I uploaded my frontend code in S3 bucket, and I’m using CloudFront on top of it.
 so in this case nginx is where ?
 configure ssl cert CloudFront level
---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
 Q. i am using ALB ina ws that is internet facing so there I add listener rule 443 & attached ssl cert so again I need to configure ssl cert in nginx level ?
--------------------
+---------------------------------------------------------------------------------------------------------
 Q. in serverless we hv custom api endpoints there we custom domain names that we map to api endpoints there I think ssl comes inti picture ?
 -->
 Always use HTTPS with custom domain in serverless APIs.
 Use ACM-managed certificates — AWS automatically renews them.
 For multiple environments (prod / dev), use separate stages with mapped domains.
------------------------
+------------------------------------------------------------------------------------------------------------------
 Serverless + Custom Domain + API Gateway + SSL
 
 When you use AWS Serverless (Lambda + API Gateway):
-
 1️⃣ You create API endpoints in API Gateway (https://xxxx.execute-api.region.amazonaws.com/...)
 2️⃣ You want a friendly domain name like https://api.mydomain.com → this is Custom Domain
 3️⃣ Once you use a custom domain, SSL/TLS becomes necessary for HTTPS traffic.
-------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+🌐 Scenario You Described
+You have ALB (Application Load Balancer) in AWS → Internet-facing
+You created Listener Rule on 443 (HTTPS)
+You attached SSL certificate (ACM) to ALB
+Nginx is running on EC2 instances behind the ALB
+Question: Do you need SSL certificate again on Nginx?
+-----------------------------------------------------------------------------------------------------------------
