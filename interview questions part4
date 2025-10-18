@@ -42,13 +42,9 @@ Type	Meaning	Use Case
 🧩Q. Does NAT Gateway create an ENI (Elastic Network Interface)?
 ✅ Yes.
 When you create a NAT Gateway in AWS:
-
 AWS automatically creates an Elastic Network Interface (ENI) for the NAT Gateway.
-
 This ENI is placed in the subnet where you are creating the NAT Gateway.
-
 It gets assigned a private IP from the subnet’s CIDR.
-
 If it’s a Public NAT Gateway, the ENI is associated with the Elastic IP you allocated.
 ==========================================
 Q. Can I use 1 nat gateway for 3 subnets ?
@@ -61,3 +57,4 @@ Q. I hv 3 nat gateways so I can assign same eip for those 3 nat gateways ?
 ap-south-1a, ap-south-1b, ap-south-1c 
 प्रत्येक NAT Gateway साठी नवीन Elastic IP तयार करून attach करावा लागतो.
 =========================================
+i hv eks setup for my prod env then I need to deploy code in that so i need to create again and again eks cluster for each and every deployment time ?
