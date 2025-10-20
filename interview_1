@@ -28,9 +28,15 @@ you use different RDS instances, usually in different AWS regions.
 Cross-Region Read Replica RDS
 ------------------------------------------------
 🌩️ What Is a SaaS Product Deployment Architecture?
-
-SaaS (Software-as-a-Service) म्हणजे तुम्ही एक software application centrally host करता (cloud वर)
+--> SaaS (Software-as-a-Service) म्हणजे तुम्ही एक software application centrally host करता (cloud वर)
 आणि users ते internet वरून use करतात — without installing anything locally.
-
 उदा: Gmail, Salesforce, Zoom, Freshworks — हे सर्व SaaS आहेत.
 ---------------------------------------------------------
+🔒 Example (DevOps perspective)
+Let’s say you use:
+GitHub (for code)
+SonarCloud (for code quality)
+Jira (for project management)
+👉 हे सर्व SaaS products आहेत — तुम्ही फक्त sign in करता,
+बाकी सर्व infra, DB, security, scalability vendor manage करतो.
+-------------------------------------------------------------
