@@ -1,0 +1,30 @@
+Q. In Kubernetes, you want to scale the Deployment api-svc from 2 to 5 Pods. Which command achieves this?*
+--> kubectl scale deployment api-svc --replicas=5
+--> kubectl patch deployment api-svc -p '{"spec":{"replicas":5}}'
+
+Q. A systemd service myapp.service failed during startup. Which command shows the last 50 log lines for just that service?*
+--> journalctl -u myapp.service -n 50
+
+Q. Which single Linux command shows the 5 processes using the most memory *right now*?*
+--> ps aux --sort=-%mem | head -6
+
+Q. A Jenkins job has been stuck in "Waiting for next available executor" for 10 minutes. What's the *first* place to look?*
+--> Manage Nodes & Clouds” to see whether agents are offline
+
+Q. In AWS, you need an EC2 instance to access S3 without embedding credentials. Which resource do you assign to the instance?*
+--> IAM Role (with an attached S3 access policy)
+
+Q. You rebuilt your Python (or Node.js) application's Docker image with a new tag myrepo/app:2.0. Which Kubernetes command updates the running Deployment *without editing YAML manually*?*
+--> kubectl set image deployment/<deployment-name> <container-name>=myrepo/app:2.0
+
+Q. A Terraform run shows 6 resources "to destroy, 0 to add, 0 to change," but you only want to remove one specific AWS IAM role immediately. What's the safest approach?
+--> terraform destroy -target=aws_iam_role.<resource_name>
+
+Q. On an Ubuntu server, which command shows *mounted* filesystems with human-readable sizes?*
+--> df -h
+
+Q. A teammate accidentally pushed secrets to the most recent Git commit on a feature branch. What's the quickest *single command* to undo that commit but keep the work locally?*
+--> git reset --soft HEAD~1
+
+Q. You need to look at the last 50 log lines from a running Docker container named web. Which one-liner does that*
+--> docker logs --tail 50 web
