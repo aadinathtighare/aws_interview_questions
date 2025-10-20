@@ -26,4 +26,11 @@ In a Multi-Site (DR) setup, you don’t use the same RDS instance for both sites
 you use different RDS instances, usually in different AWS regions.
 ------------------------
 Cross-Region Read Replica RDS
-------------
+------------------------------------------------
+🌩️ What Is a SaaS Product Deployment Architecture?
+
+SaaS (Software-as-a-Service) म्हणजे तुम्ही एक software application centrally host करता (cloud वर)
+आणि users ते internet वरून use करतात — without installing anything locally.
+
+उदा: Gmail, Salesforce, Zoom, Freshworks — हे सर्व SaaS आहेत.
+---------------------------------------------------------
