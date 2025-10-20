@@ -1,1 +1,14 @@
-multi site approach ? in disaster recovery explain in marathi-english mix way
+Q. multi site approach ? in disaster recovery explain in marathi-english mix way
+
+🧩 What is Lambda@Edge in CloudFront ?
+--> Lambda@Edge is a feature of Amazon CloudFront that lets you run AWS Lambda functions at CloudFront edge locations (i.e., near users).
+It’s basically serverless code running close to your users, triggered by CloudFront events — without provisioning servers.
+You attach a Lambda@Edge function to a CloudFront distribution.
+It runs automatically when specific CloudFront events happen.
+
+Events where Lambda@Edge can run:
+-->
+Viewer Request – before CloudFront checks the cache (when user makes a request).
+Origin Request – before CloudFront sends the request to your origin (like S3 or EC2).
+Origin Response – after CloudFront gets response from origin.
+Viewer Response – before response is sent back to the user.
