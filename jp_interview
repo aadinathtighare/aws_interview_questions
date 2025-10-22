@@ -1,0 +1,20 @@
+Q. how to create route 53 things via terraform ?
+Q. i hv repo for store terraform code via that I created load balancer and other resources like s3 ec2 like that now that repo is deleted means code is deleted of that infra 
+now i am not using that infra I want to delete that resources via terraform destroy how ?
+--> can we do it with state file 
+
+Q. what is eni in aws ? 
+
+Q. CNAME record vs A record in R53 ?
+
+Q. how to do setup of blue and green deployment via terraform ?
+
+Q. how to rotate secret like db password aws secret manager via terraform ?
+
+Q. tell me architecture of any project ?
+
+Q. explain me architecture of app in k8s ?
+
+Q. helm chart ?
+
+Q. how u configure 2 regions in r53 via failover routing policy via terraform ?
