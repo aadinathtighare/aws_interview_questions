@@ -1,0 +1,14 @@
+Q. we hv worker nodes node group so I m keeping min maz desired values there so how they are reach max capacity , is there any autoscaling policy in my eks ?
+--> Cluster Autoscaler 
+is a component that automatically increases or decreases the number of nodes in your EKS node group based on pod scheduling needs.
+===============================================
+🧠 How it works:
+
+Pods pending → means no space to schedule
+→ Cluster Autoscaler requests AWS to add new node (up to max limit).
+
+Nodes underutilized → means very few pods running
+→ Cluster Autoscaler can remove extra nodes (down to min limit).
+
+Desired capacity changes dynamically between min–max values.
+--------------------------------------------------------------
