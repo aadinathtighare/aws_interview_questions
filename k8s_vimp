@@ -1,0 +1,2 @@
+Velero = Manager (backup orchestrator)
+Restic / Kopia = Workers (actual data backup karणारं tool)
