@@ -1,0 +1,39 @@
+Q. A record in dns is main record ? that is convert domain name to ip address.
+--> Yes — the A record (Address record) is the main DNS record that maps a domain name → IPv4 address. 
+example.com   →   192.168.1.10
+-------------------------------------------------------------------------
+💡 Few key points:
+A record → domain → IPv4
+AAAA record → domain → IPv6
+CNAME record → domain → another domain (not directly IP)
+--------------------------------
+📘 In short:
+A Record → IPv4 (32-bit)
+AAAA Record → IPv6 (128-bit)
+---------------------------------------
+When you map your Load Balancer DNS name (like my-app-1234567890.us-east-1.elb.amazonaws.com) to your custom domain (like app.mydomain.com) in Route 53,
+👉 you are not using an A record (directly) — instead, you use a CNAME or Alias record (which acts like an A record for AWS resources).
+---------------------------------------------------                                                                                        -----------------------
+💡 Explanation:
+AWS Load Balancer DNS name
+Example: myapp-123456.elb.amazonaws.com
+It’s not a fixed IP — it can change anytime.
+So, you can’t directly create a traditional A record with a static IP.
+Solution: Use CNAME or Alias
+CNAME (normal DNS):
+app.mydomain.com → myapp-123456.elb.amazonaws.com
+------------------------------------------
+2) Alias (Route 53 feature):
+
+AWS-specific type of A record that points to AWS services (like ELB, CloudFront, S3).
+Works like an A record but doesn’t need a fixed IP.
+----------------------------
+Type	Used for	Points To	Notes
+A Record	: Direct IP:	Static IP address	For servers with fixed IPs
+CNAME	:Domain → Domain:	ELB DNS name	Standard DNS approach
+Alias (A)	: Domain → AWS Resource	ELB, CloudFront, etc.	AWS-specific — preferred
+----------------------
+
+
+
+
