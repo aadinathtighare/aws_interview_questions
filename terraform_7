@@ -1,0 +1,32 @@
+Q. i want to create scenerio like in terraform we hv create before destroy life cycle rule how to use ?
+--> 1st I need to create ec2 with ami id 1 , then I deliver webpage index.html so now I changed code so new ami I created so without downtime I want to craete ec2 instance by new ami id 2.
+--------------------------------------------
+🔹 Example: Without create_before_destroy ((meta-argument: terraform)) lifecycle -->
+Now, if you change the AMI or instance type and run: #terraform apply
+Terraform will destroy the old instance first and then create the new one.
+➡️ This can cause downtime.
+---------------------------------------------------
+🔹 Example: With create_before_destroy
+To avoid downtime, use the lifecycle block 👇
+
+lifecycle {
+    create_before_destroy = true
+  }
+
+Now when you modify AMI or instance_type:
+Terraform will first create a new EC2 instance
+Then destroy the old one after the new is ready
+✅ No downtime.
+---------------------------------------------------------------------------
+When replacing S3 buckets (with versioning, it’s risky without it)
+lifecycle {
+  prevent_destroy = true
+}
+--------------------------------------------------------------------------
+lifecycle {
+        prevent_destroy = true
+        ignore_changes = [
+          tags
+        ]
+      }
+--------------------------------------------------------------------------
