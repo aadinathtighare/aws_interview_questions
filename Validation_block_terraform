@@ -1,0 +1,11 @@
+in which real time scenerio I can use give me examples of Validation block Terraform ?
+--> Terraform मधल्या validation block चा use real-time production setups मध्ये खूप उपयोगी असतो, कारण तो wrong inputs apply होण्याआधीच stop करतो.
+🧩 1️⃣ Example: Restricting EC2 Instance Type
+2️⃣ Example: Restricting Environment Names.
+4️⃣ Example: Minimum or Maximum Count Validation
+तू ASG instance count ठरवतोस आणि त्याचं range 1 ते 5 असावं असं ठरवलं आहे.
+5️⃣ Example: Region Validation
+तुझ्या organization ने ठरवलंय की resources फक्त ap-south-1 (Mumbai) आणि us-east-1 मध्ये तयार व्हावेत.
+6️⃣ Example: S3 Bucket Name Format Check
+Bucket name मध्ये spaces किंवा uppercase letters नकोत.
+=========================================
