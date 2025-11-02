@@ -1,0 +1,18 @@
+if I hosted my application on ec2 servers with ASG auto scaling then I buikd & deploy new code so every time I need to create new servers in my ASg group.
+but in eks k8s cluster I need to build new image with new code and deploy it in eks cluster so no need to re-create underlying infra ?
+I m right ?
+-->💬 So yes — you are 100% correct:
+
+In EKS, you only build a new Docker image and redeploy it —
+you don’t need to recreate EC2 servers or node groups.
+The existing cluster infra handles your new app versions smoothly. ✅
+---------------
+🔍 Quick Comparison
+Feature	EC2 + ASG	EKS (Kubernetes)
+Deployment Unit	AMI / Code on EC2	Docker Image
+Infra Change Needed for New Version?	✅ Often Yes	❌ No
+Rollback	Revert AMI / Redeploy	Just change image tag
+Deployment Speed	Slow (minutes)	Fast (seconds)
+Auto Scaling	Whole VM	Pod level
+Cost Efficiency	Less (static)	High (shared infra)
+==================
