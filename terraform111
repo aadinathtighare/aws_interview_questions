@@ -1,0 +1,7 @@
+Difference vs normal terraform plan
+Command	Purpose
+
+terraform plan	--> Shows changes to reach desired state
+terraform plan -refresh-only	= Shows only drift
+terraform apply	     =Makes infra changes
+terraform apply -refresh-only	     =Updates state only
