@@ -1,0 +1,28 @@
+apiVersion: apps/v1          # 1. API group and version
+kind: Deployment             # 2. Type of resource
+metadata:                    # 3. Data that identifies the object
+  name: web-app-deployment
+  labels:
+    app: web-server
+spec:                        # 4. Specification of the desired state
+  replicas: 3                # 5. Number of pods to run
+  selector:                  # 6. How to find the pods to manage
+    matchLabels:
+      app: my-web-app
+  template:                  # 7. Blueprint for the pods
+    metadata:
+      labels:
+        app: my-web-app      # Must match the selector above
+    spec:
+      containers:            # 8. Container(s) to run inside the pod
+      - name: nginx-container
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+        resources:           # 9. Resource management
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
