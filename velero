@@ -1,1 +1,79 @@
 Q. before eks cluster upgrade we take backup via velero so we take backup of application like pod or what type of backup actually we take ?
+Before an EKS cluster upgrade, Velero does NOT back up the running Pods themselves.
+👉 Velero backs up:
+Kubernetes objects (YAML/state)
+Persistent data (PVC → EBS snapshots)
+----------------------------------------
+1️⃣ Kubernetes resources (control-plane state)
+Velero backs up YAML definitions from etcd, such as: Namespaces, Deployments, StatefulSets, DaemonSets
+2️⃣ Persistent Volumes data (most important)
+
+If your app uses storage: PVCs, PVs, EBS volume snapshots (AWS)
+📌 This is the actual application data backup (DB, uploads, logs, etc.)
+-------------------
+❌ What Velero does NOT back up
+
+Running Pods (containers)
+Pods are ephemeral and recreated from Deployments.
+Why this is enough before EKS upgrade
+During upgrade:
+
+Control plane / nodes may restart
+
+Pods get recreated
+
+PVCs reattach from snapshots
+
+After restore:
+
+Deployments recreate Pods
+
+StatefulSets reattach volumes
+
+App comes back to same state
+--------------------------------------
+Optional best practices
+
+Take namespace-wise backup
+
+Exclude system namespaces if not needed
+
+Test restore in staging
+
+Enable CSI snapshot instead of in-tree
+--------------------------------
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+Q. velero take control plane components backup like etcd also  ? No, Velero does NOT take a raw etcd backup in EKS.
+--> ❌ What Velero does NOT do
+
+It does NOT take a snapshot of etcd
+It does NOT back up EKS control plane components:
+kube-apiserver
+etcd
+controller-manager
+scheduler
+👉 In EKS, control plane is AWS-managed and not accessible.
+--------------------------------------------------------------------------------
+Velero performs a logical backup via Kubernetes API:
+Velero: Calls Kubernetes API
+Reads resource definitions
+Stores them as JSON/YAML in S3
+📌 This data comes from etcd, but it is not an etcd snapshot.
+----------------------------------------------------------------------------
+🔹 Why etcd snapshot is not possible in EKS
+etcd is fully managed by AWS
+No SSH access
+No direct snapshot control
+AWS internally handles etcd durability
+-----------------------------------------------------------
+Self-managed K8s:
+✅ Yes (etcdctl snapshot) This is different from self-managed Kubernetes.
+--------------------
