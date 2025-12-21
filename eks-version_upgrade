@@ -50,9 +50,72 @@ Q. in my case what i did i created new node-group with new version & upgrade the
 --> In your specific situation, since you have both a new node group (at the new version) and an upgraded old node group (now also at the new version), you technically have a "Blue-Green" setup where both groups are now identical in version.
 
 You should delete the New Node Group that you created as a temporary migration target.
--------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. in aws console eks there is update option for node group so what exactly happen in background when we click in update ?
 --> AWS Console मधून जेव्हा तू EKS Node Group च्या "Update" बटणवर क्लिक करतोस, तेव्हा बॅकग्राउंडमध्ये एक खूप महत्त्वाची प्रोसेस चालते जिला "Rolling Update" म्हणतात.
 
 याचा मुख्य उद्देश हाच असतो की तुमचे Application चालू असताना (Zero Downtime) नवीन Nodes ॲड व्हावेत आणि जुने Nodes काढून टाकावेत.
-------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. suppose i m using terraform for eks version upgrade so i need to upgrade first control plane then add ons then worker nodes , how it possible in terraform ?
+--> हो, Terraform मध्ये EKS अपग्रेड करताना हीच पद्धत (Control Plane -> Add-ons -> Worker Nodes) फॉलो करणे गरजेचे आहे.
+Terraform मध्ये एकाच वेळी सर्व व्हर्जन्स बदलण्यापेक्षा, एकामागून एक apply करणे सर्वात सुरक्षित असते.
+Step 1: Control Plane Upgrade आधी फक्त aws_eks_cluster रिसोर्समधील version अपडेट करा (उदा. 1.30 वरून 1.31).
+# terraform apply -target=aws_eks_cluster.example
+
+Step 2: Add-ons Upgrade कंट्रोल प्लेन अपडेट झाल्यावर, aws_eks_addon रिसोर्समध्ये जाऊन addon_version अपडेट करा. नवीन K8s व्हर्जनला सपोर्ट करणारीच व्हर्जन निवडा.
+# terraform apply -target=aws_eks_addon.vpc_cni
+
+Step 3: Worker Nodes Upgrade शेवटी aws_eks_node_group मधील version किंवा ami_type अपडेट करा.
+# terraform apply -target=aws_eks_node_group.example
+
+---------------------------------
+२. कोडमध्ये 'Depends On' चा वापर करणे
+जर तुम्हाला सर्व काही एकाच terraform apply मध्ये करायचे असेल, तर तुम्ही depends_on हे आर्गुमेंट वापरून क्रम ठरवू शकता. यामुळे Terraform ला कळते की आधी काय पूर्ण झाले पाहिजे.
+# 1. EKS Cluster (Control Plane)
+resource "aws_eks_cluster" "my_cluster" {
+  name     = "production-cluster"
+  version  = "1.31" # नवीन व्हर्जन
+  role_arn = aws_iam_role.cluster.arn
+  # ... इतर कॉन्फिग
+}
+
+# 2. EKS Add-ons (Depends on Cluster)
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name  = aws_eks_cluster.my_cluster.name
+  addon_name    = "vpc-cni"
+  addon_version = "v1.18.1-eksbuild.1" 
+
+  # क्लस्टर अपडेट झाल्याशिवाय हे सुरू होणार नाही
+  depends_on = [aws_eks_cluster.my_cluster]
+}
+
+# 3. Node Group (Depends on Add-ons/Cluster)
+resource "aws_eks_node_group" "worker_nodes" {
+  cluster_name    = aws_eks_cluster.my_cluster.name
+  node_group_name = "standard-workers"
+  version         = "1.31" # क्लस्टर व्हर्जनशी मॅच करा
+
+  # हे शेवटून अपडेट होईल
+  depends_on = [aws_eks_cluster.my_cluster, aws_eks_addon.vpc_cni]
+}
+============================================================================
+Sequential Apply: मोठ्या प्रोडक्शन क्लस्टरमध्ये depends_on पेक्षा मॅन्युअली एकामागून एक -target फ्लॅग वापरून अप्लाय करणे जास्त 'Safe' मानले जाते, कारण यामुळे तुम्हाला प्रत्येक टप्प्यावर एरर चेक करता येतात.
+==========================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
