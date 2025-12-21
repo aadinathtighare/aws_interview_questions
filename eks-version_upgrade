@@ -1,1 +1,25 @@
 Q. i hv eks cluster i want to do version upgrade so can I create new node group with new version in same eks cluster ?
+Q. if I drain and cordan old nodes in old node group then how to migrate workload ?
+its automatic or manually ?
+👉 Workload migration is AUTOMATIC, but you trigger it manually.
+
+Cordon/Drain → manual action (by you)
+
+Pod rescheduling → automatic (by Kubernetes)
+-------------------------------------------------------------------
+PDB is VERY important exactly in the node drain / upgrade situation you described. “During voluntary disruptions (like drain, upgrade), how many pods are allowed to go down at a time.”
+
+It protects your application from downtime.
+
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-pdb
+  namespace: default
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: my-app
+-----------------------------
+
