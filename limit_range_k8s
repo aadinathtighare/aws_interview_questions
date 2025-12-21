@@ -1,0 +1,56 @@
+Q. we have limit range and resource quota when we use in k8s ?
+--> Resource Quota: संपूर्ण Namespace साठी मर्यादा ठरवतो (Total Capacity).
+
+Limit Range: त्या नेमस्पेस मधील प्रत्येक पॉड किंवा कंटेनर साठी मर्यादा ठरवतो (Individual Capacity)
+----------------------------------------------------------------------------
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-cpu-quota
+  namespace: dev
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "10"
+    limits.memory: 16Gi
+--------------------------------------
+२. Limit Range (प्रत्येक पॉडसाठी)
+हे एखाद्या नियमासारखे आहे. जर एखाद्या डेव्हलपरने पॉड तयार करताना त्याला किती CPU/RAM लागेल हे सांगितले नाही, तर Limit Range त्याला Default व्हॅल्यू देते. तसेच, एखादा पॉड खूप मोठा किंवा खूप लहान नसावा हे देखील हे ठरवते.
+
+हे काय कंट्रोल करते?
+
+Min/Max: एका पॉडची कमीत कमी आणि जास्तीत जास्त साईज.
+
+Default Request/Limit: जर पॉडमध्ये व्हॅल्यू दिली नसेल, तर आपोआप कोणती व्हॅल्यू लावायची.
+--------------------------------------
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-min-max-limit-range
+spec:
+  limits:
+  - max:
+      cpu: "800m"
+      memory: "1Gi"
+    min:
+      cpu: "200m"
+      memory: "500Mi"
+    default:        # जर पॉडमध्ये काही दिले नसेल तर हे लागू होईल
+      cpu: "500m"
+      memory: "700Mi"
+    type: Container
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
