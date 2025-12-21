@@ -22,4 +22,15 @@ spec:
     matchLabels:
       app: my-app
 -----------------------------
+❌ PDB mhanje “pod old node var chaluch pahije” asa nahi
 
+✅ PDB mhanje “cluster madhe kamit kami 1 pod running pahije”
+
+Pod:
+
+Old node var asu shakto
+
+Kinva new node var asu shakto
+================
+PDB ensures that during node draining, Kubernetes evicts pods gradually so that the minimum required pods remain available, enabling zero-downtime upgrades.
+=====================
