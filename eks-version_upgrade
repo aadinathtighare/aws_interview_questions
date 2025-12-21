@@ -42,3 +42,12 @@ what is the kind for cluster autoscaler ?
 Cluster Autoscaler (CA) itself is typically installed as a Deployment object.
 kind: Deployment
 -------------------------------------------------------
+Q. in eks during eks version upgrade i created new node group with new version so after workload migration is completed from old node group to new node group 
+which node group I can delete ?
+--> In an EKS version upgrade scenario where you have already created a new node group and migrated your workloads, you should delete the Old Node Group (the one running the previous Kubernetes version).
+------------------------
+Q. in my case what i did i created new node-group with new version & upgrade the old node group ?
+--> In your specific situation, since you have both a new node group (at the new version) and an upgraded old node group (now also at the new version), you technically have a "Blue-Green" setup where both groups are now identical in version.
+
+You should delete the New Node Group that you created as a temporary migration target.
+-------------------------------------------
