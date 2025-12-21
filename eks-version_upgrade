@@ -33,4 +33,8 @@ Old node var asu shakto
 Kinva new node var asu shakto
 ================
 PDB ensures that during node draining, Kubernetes evicts pods gradually so that the minimum required pods remain available, enabling zero-downtime upgrades.
-=====================
+===============================================
+🔹 Commands to test PDB behavior
+# kubectl get pdb -A
+# kubectl describe pdb app-pdb
+===================================================
