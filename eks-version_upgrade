@@ -106,8 +106,79 @@ we are giving values like ami_id for node group
 add ons versions
 --------------------------------------------
 
+Q. suppose i m using jenkins pipeline for creating  eks cluster by terraform then i want to upgrade eks version so can I use jenkins pipeline for upgrdae version also ?
+रिअल-टाइम प्रोडक्शनमध्ये Jenkins Pipeline वापरून EKS अपग्रेड करणे ही सर्वात उत्तम आणि 'Standard' पद्धत आहे. मॅन्युअली आपल्या लॅपटॉपवरून terraform apply करण्यापेक्षा पाइपलाइन वापरल्यामुळे कामात पारदर्शकता आणि सुरक्षितता राहते.
 
+Stage 1 (Control Plane): terraform apply -target=aws_eks_cluster.my_cluster चालवून आधी मास्टर नोड्स अपग्रेड करा.
 
+Stage 2 (Add-ons): त्यानंतर CoreDNS, VPC-CNI आणि kube-proxy अपडेट करा.
+
+Stage 3 (Nodes): शेवटी नोड ग्रुप अपडेट करा. जर तुम्ही Managed Node Groups वापरत असाल, तर टेराफॉर्म आपोआप रोलिंग अपडेट (Rolling Update) करेल, ज्यामुळे तुमचे ॲप्लिकेशन चालू राहील.
+
+=====================
+Q. so Stage 1 Control Plane, Stage 2 (Add-ons), Stage 3 (Node group ) give me full pipeline ?
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION     = "us-east-1"
+        TF_VAR_version = "1.31" // टार्गेट व्हर्जन इथे सेट करा
+    }
+
+    stages {
+        stage('Checkout & Init') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo/eks-terraform.git'
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                // अपग्रेडचा रिव्ह्यू करण्यासाठी आधी प्लॅन पाहणे
+                sh 'terraform plan'
+            }
+        }
+
+        stage('Stage 1: Upgrade Control Plane') {
+            steps {
+                input message: "Upgrade EKS Control Plane to ${env.TF_VAR_version}?"
+                sh 'terraform apply -target=aws_eks_cluster.my_cluster -auto-approve'
+            }
+        }
+
+        stage('Stage 2: Upgrade Add-ons') {
+            steps {
+                echo "Upgrading VPC-CNI, CoreDNS, and Kube-Proxy..."
+                // ॲड-ऑन्स अपडेट करणे
+                sh 'terraform apply -target=aws_eks_addon.vpc_cni -target=aws_eks_addon.coredns -target=aws_eks_addon.kube_proxy -auto-approve'
+            }
+        }
+
+        stage('Stage 3: Upgrade Node Groups') {
+            steps {
+                input message: "Proceed with Worker Node Rolling Update?"
+                echo "Updating Node Groups to version ${env.TF_VAR_version}..."
+                // शेवटी नोड ग्रुप अपडेट करणे
+                sh 'terraform apply -target=aws_eks_node_group.worker_nodes -auto-approve'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "EKS Upgrade Successful!"
+        }
+        failure {
+            echo "EKS Upgrade Failed. Please check the logs."
+        }
+    }
+}
+==================================================
+Add-on Versions: लक्षात ठेवा की जेव्हा तुम्ही कंट्रोल प्लेन 1.31 वर नेता, तेव्हा तुम्हाला तुमच्या Terraform कोडमध्ये ॲड-ऑन्सचे व्हर्जन्स देखील अपडेट करावे लागतील जे त्या नवीन K8s व्हर्जनशी सुसंगत (compatible) असतील.
+
+Rolling Updates: मॅनेज्ड नोड ग्रुप्स (Managed Node Groups) वापरत असल्यामुळे, स्टेज ३ दरम्यान AWS आपोआप जुन्या नोड्सला रोटेट करेल (Drain/Cordon) आणि नवीन नोड्स ॲड करेल.
+============================================
 
 
 
