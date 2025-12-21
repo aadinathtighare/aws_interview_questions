@@ -1,0 +1,52 @@
+Q. what is sa service accounts in k8s ? its create by default in which case its create by default and in which case i need to create service accounts ?
+--> Users (माणसे) क्लस्टरला एक्सेस करण्यासाठी जसे kubectl वापरतात, तसेच Pods (सॉफ्टवेअर) जेव्हा क्लस्टरच्या API शी बोलू इच्छितात, तेव्हा त्यांना Service Account ची गरज असते.
+Kubernetes मध्ये प्रत्येक Namespace मध्ये एक default नावाचे Service Account आधीपासूनच तयार असते.
+
+Default Creation: तुम्ही जेव्हा एखादा नवीन Namespace तयार करता (उदा. kubectl create namespace dev), तेव्हा Kubernetes त्यामध्ये आपोआप एक default service account बनवते.
+
+Automatic Mount: जर तुम्ही तुमच्या पॉडच्या कन्फिगरेशनमध्ये कोणतेही Service Account दिले नाही, तर Kubernetes त्या पॉडला default service account आपोआप नियुक्त (Assign) करते.
+===============================================================
+AWS/Cloud Access (IRSA): जर तुमच्या पॉडला S3 बकेटमधून डेटा वाचायचा असेल, तर तुम्ही एक Service Account बनवून त्याला AWS IAM Role शी लिंक करता. (याला IAM Roles for Service Accounts म्हणतात).
+==================================================================================
+२. तुम्हाला स्वतः (Custom) Service Account कधी तयार करावे लागते?
+जेव्हा तुमच्या पॉडला क्लस्टरमध्ये काहीतरी काम (Action) करायचे असते, तेव्हा तुम्हाला स्वतःचे Service Account बनवून त्याला RBAC (Role Based Access Control) द्वारे परवानगी द्यावी लागते.
+
+तुम्हाला खालील परिस्थितींमध्ये स्वतःचे SA बनवावे लागेल:
+
+Monitoring Tools: जर तुम्हाला Prometheus वापरायचा असेल, तर त्याला सर्व नोड्स आणि पॉड्सची माहिती मिळवण्यासाठी परवानग्या लागतात.
+
+CI/CD Tools: जर Jenkins किंवा GitLab Runner तुमच्या क्लस्टरमध्ये नवीन पॉड्स डिप्लॉय करत असतील.
+
+App Requirements: जर तुमच्या ॲप्लिकेशनला (उदा. एखादा Python Script) क्लस्टरमधील इतर पॉड्सची यादी पाहणे किंवा नवीन ConfigMap तयार करणे आवश्यक असेल.
+---------------------
+दुसऱ्या क्लस्टरवर स्विच करा: kubectl config use-context <context-name-from-list>
+------------------------------
+Q. if i have jenkins server on ec2 which is i m using for cicd deploy app on eks.   so which permissions I need to give to that ec2?
+--> जेव्हा तुमचा Jenkins सर्व्हर एका EC2 वर असतो आणि तिथून तुम्हाला EKS वर ॲप डिप्लॉय करायचे असते, तेव्हा तुम्हाला IAM Role आणि Kubernetes RBAC या दोन्ही स्तरांवर परवानग्या द्याव्या लागतात.
+तुमच्या Jenkins EC2 इन्स्टन्सला एक IAM Role असावा (Instance Profile). त्यामध्ये खालील किमान परवानग्या असणे आवश्यक आहे जेणेकरून तो EKS क्लस्टरशी संवाद साधू शकेल:
+eks:DescribeCluster: क्लस्टरची माहिती मिळवण्यासाठी.
+
+eks:ListClusters: क्लस्टर शोधण्यासाठी.
+
+sts:AssumeRole: (सर्वात महत्त्वाचे) जर तुमचा EKS क्लस्टर बनवणारा युजर वेगळा असेल, तर Jenkins ला तो रोल 'Assume' करावा लागतो.
+aws eks update-kubeconfig --name cluster-name ही कमांड रन करून Jenkins युजरसाठी कॉन्फिगरेशन फाईल तयार करावी लागेल.
+-----------------------------
+२. Kubernetes RBAC (EKS च्या आतली परवानगी)
+AWS मध्ये रोल असून चालत नाही, तर त्या रोलला Kubernetes च्या आत 'ओळख' (Identity) मिळणे आवश्यक आहे.
+
+aws-auth ConfigMap: तुम्हाला तुमच्या EKS क्लस्टरमधील aws-auth नावाचे ConfigMap एडिट करावे लागेल. त्यामध्ये तुमच्या Jenkins EC2 च्या IAM Role ARN ला एका 'Username' शी मॅप करावे लागेल.
+
+Role & RoleBinding: नंतर त्या युजरला (Jenkins) क्लस्टरमध्ये पॉड डिप्लॉय करण्याची किंवा एडिट करण्याची परवानगी देण्यासाठी ClusterRoleBinding तयार करावे लागेल.
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
