@@ -38,3 +38,7 @@ PDB ensures that during node draining, Kubernetes evicts pods gradually so that 
 # kubectl get pdb -A
 # kubectl describe pdb app-pdb
 ===================================================
+what is the kind for cluster autoscaler ?
+Cluster Autoscaler (CA) itself is typically installed as a Deployment object.
+kind: Deployment
+-------------------------------------------------------
