@@ -51,3 +51,8 @@ Q. in my case what i did i created new node-group with new version & upgrade the
 
 You should delete the New Node Group that you created as a temporary migration target.
 -------------------------------------------
+Q. in aws console eks there is update option for node group so what exactly happen in background when we click in update ?
+--> AWS Console मधून जेव्हा तू EKS Node Group च्या "Update" बटणवर क्लिक करतोस, तेव्हा बॅकग्राउंडमध्ये एक खूप महत्त्वाची प्रोसेस चालते जिला "Rolling Update" म्हणतात.
+
+याचा मुख्य उद्देश हाच असतो की तुमचे Application चालू असताना (Zero Downtime) नवीन Nodes ॲड व्हावेत आणि जुने Nodes काढून टाकावेत.
+------------------------------------
