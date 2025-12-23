@@ -1,0 +1,18 @@
+Q. i have a dns which is basically publically exposed but i want to make it access only internally how to achieve this ?
+--> हे "Internal Only" करण्यासाठी आपल्याला Private DNS किंवा Split-Horizon DNS वापरावा लागेल.
+
+Private Hosted Zone तयार करा. हा झोन तुमच्या एका ठराविक VPC (Virtual Private Cloud) ला जोडला जातो.
+
+फायदा: फक्त त्या VPC मधील किंवा VPN ने जोडलेले लोकच तो DNS पाहू शकतील. बाहेरच्या इंटरनेटला तो DNS माहीतच नसेल.
+--------------
+२. Split-Horizon DNS (हायब्रीड पद्धत)
+जर तुम्हाला बाहेरच्या जगासाठी तोच डोमेन ठेवायचा असेल (उदा. api.example.com) पण त्याचे उत्तर (IP) वेगळे द्यायचे असेल, तर ही पद्धत वापरतात.
+
+Public DNS: api.example.com --> Public Load Balancer IP कडे पॉइंट करतो.
+
+Private DNS: api.example.com --> तुमच्या Internal Load Balancer किंवा Private IP कडे पॉइंट करतो.
+
+काम करण्याची पद्धत: जेव्हा ऑफिसच्या नेटवर्कमधून रिक्वेस्ट येईल, तेव्हा ती Internal IP कडे जाईल. जेव्हा घराच्या इंटरनेटवरून येईल, तेव्हा ती Public IP कडे जाईल (किंवा ब्लॉक होईल).
+----------------
+Zabbix Monitoring: जर तुमचा Zabbix सर्व्हर बाहेर असेल, तर तो आता या सर्विसेस मॉनिटर करू शकणार नाही. त्यासाठी तुम्हाला क्लस्टरच्या आत Zabbix Proxy बसवावा लागेल.
+------------
